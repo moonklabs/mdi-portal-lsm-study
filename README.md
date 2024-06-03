@@ -60,4 +60,4 @@ MDI 포털 풀스택 구현 스터디
 
 ##
 
-![이수민](https://i.ibb.co/F4xhdSQ/sumin.jpg)
+![이수민](sumin.jpg)
