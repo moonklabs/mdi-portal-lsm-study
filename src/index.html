@@ -18,6 +18,52 @@
 
     <main></main>
 
+    <dialog id="modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <spam class="new-window-form-title">새 창 만들기</spam>
+          <span id="new-window-close" class="close-button">&times;</span>
+        </div>
+        <form id="new-window-form" class="new-window-form">
+          <label for="window-title">이름</label>
+          <input type="text" id="window-title" name="window-title" required />
+          <label>
+            <input type="radio" name="action" value="browser" required />
+            브라우저 창
+          </label>
+          <label for="window-content">URL</label>
+          <input
+            type="text"
+            id="window-content"
+            name="window-content"
+            required
+          />
+
+          <label>
+            <input type="radio" name="action" value="clock" required />
+            시계
+          </label>
+          <label for="timezone">Timezone</label>
+          <select id="timezone" name="timezone" disabled>
+            <option value="default" selected>도시를 선택해주세요.</option>
+            <option value="Asia/Seoul">Seoul (UTC+09:00)</option>
+            <option value="Asia/Tokyo">Tokyo (UTC+09:00)</option>
+            <option value="America/New_York">New York (UTC-05:00)</option>
+            <option value="America/Washington">
+              Washington DC (UTC-05:00)
+            </option>
+            <option value="Europe/London">London (UTC+00:00)</option>
+            <option value="Europe/Paris">Paris (UTC+01:00)</option>
+            <option value="Europe/Berlin">Berlin (UTC+01:00)</option>
+            <option value="Asia/Shanghai">Shanghai (UTC+08:00)</option>
+            <option value="Asia/Dubai">Dubai (UTC+04:00)</option>
+            <option value="Australia/Sydney">Sydney (UTC+10:00)</option>
+          </select>
+          <button type="submit">생성</button>
+        </form>
+      </div>
+    </dialog>
+
     <footer class="taskbar">
       <ul class="taskbar-items">
         <li class="taskbar-item">시작</li>
