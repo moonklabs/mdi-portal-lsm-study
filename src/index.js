@@ -6,11 +6,17 @@ document.addEventListener('DOMContentLoaded', () => {
   // new-window는 새 창을 띄우는 버튼, modal은 새 창을 띄우는 모달
   const newWindow = document.getElementById('new-window');
   const modal = document.getElementById('modal');
+
+  const closeButton = document.getElementById('new-window-close');
+
+  const form = document.getElementById('new-window-form');
+  
   const closeButton = document.querySelector('.close-button');
 
   const form = document.getElementById('new-window-form');
 
   console.log('modal', modal.__proto__);
+
 
   if (!modal.showModal) {
     dialogPolyfill.registerDialog(modal);
@@ -48,7 +54,10 @@ document.addEventListener('DOMContentLoaded', () => {
     navMenu.classList.remove('nav-menu--visible');
   });
 
-  closeButton.addEventListener('click', () => {
+
+  closeButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    console.log('close');
     modal.close();
   });
 
@@ -63,3 +72,77 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const action = document.querySelector('input[name="action"]:checked').value;
+    const title = document.getElementById('window-title').value;
+    const content = document.getElementById('window-content').value;
+    const timezone = document.getElementById('timezone').value;
+
+    let newWindowData = {};
+
+    // 1. 이벤트 리스너에서 분리
+    // 2. 메소드에서 분리
+
+    newWindowData = { action, title, content, timezone };
+
+    localStorage.setItem('newWindowData', JSON.stringify(newWindowData));
+
+    createNewWindow(newWindowData);
+    updateTaskList(newWindowData);
+
+    modal.close();
+  });
+});
+
+const createNewWindow = (newWindowData) => {
+  const main = document.querySelector('main');
+  const container = document.createElement('section');
+
+  container.classList.add('window');
+
+  container.innerHTML = `
+    <div class='window-header'>
+      ${newWindowData.title}
+      <div class='window-controls'>
+        <button class='maximize-button'>&#43;</button>
+        <button class='minimize-button'>&#45;</button>
+        <button class='close-button'>X</button>
+      </div>
+    `;
+
+  const maximizeButton = container.querySelector('.maximize-button');
+  const minimizeButton = container.querySelector('.minimize-button');
+  const closeButton = container.querySelector('.close-button');
+
+  maximizeButton.addEventListener('click', () => {});
+
+  minimizeButton.addEventListener('click', () => {});
+
+  closeButton.addEventListener('click', () => {});
+
+  main.appendChild(container);
+};
+
+const updateTaskList = (newWindowData) => {
+  const taskList = document.querySelector('.taskbar-items');
+  const task = document.createElement('li');
+  task.classList.add('taskbar-item');
+  task.innerHTML = `
+    <span>${newWindowData.title}</span>
+  `;
+
+  taskList.appendChild(task);
+};
+
+Object.keys(localStorage).forEach((key) => {
+  console.log('key', key);
+  if (key.startsWith('newWindow')) {
+    const data = JSON.parse(localStorage.getItem(key));
+    createNewWindow(data);
+    updateTaskList(data);
+  }
+});
+
