@@ -6,12 +6,17 @@ document.addEventListener('DOMContentLoaded', () => {
   // new-window는 새 창을 띄우는 버튼, modal은 새 창을 띄우는 모달
   const newWindow = document.getElementById('new-window');
   const modal = document.getElementById('modal');
+
   const closeButton = document.getElementById('new-window-close');
 
   const form = document.getElementById('new-window-form');
+  
+  const closeButton = document.querySelector('.close-button');
 
-  console.log(closeButton);
-  console.log(modal);
+  const form = document.getElementById('new-window-form');
+
+  console.log('modal', modal.__proto__);
+
 
   if (!modal.showModal) {
     dialogPolyfill.registerDialog(modal);
@@ -45,10 +50,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   newWindow.addEventListener('click', (e) => {
     e.stopPropagation();
-    console.log('open');
     modal.showModal();
     navMenu.classList.remove('nav-menu--visible');
   });
+
 
   closeButton.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -140,3 +145,4 @@ Object.keys(localStorage).forEach((key) => {
     updateTaskList(data);
   }
 });
+
