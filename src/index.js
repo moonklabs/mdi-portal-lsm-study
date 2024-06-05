@@ -8,15 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const modal = document.getElementById('modal');
 
   const closeButton = document.getElementById('new-window-close');
-
-  const form = document.getElementById('new-window-form');
-  
-  const closeButton = document.querySelector('.close-button');
-
   const form = document.getElementById('new-window-form');
 
   console.log('modal', modal.__proto__);
-
 
   if (!modal.showModal) {
     dialogPolyfill.registerDialog(modal);
@@ -53,7 +47,6 @@ document.addEventListener('DOMContentLoaded', () => {
     modal.showModal();
     navMenu.classList.remove('nav-menu--visible');
   });
-
 
   closeButton.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -145,4 +138,3 @@ Object.keys(localStorage).forEach((key) => {
     updateTaskList(data);
   }
 });
-
