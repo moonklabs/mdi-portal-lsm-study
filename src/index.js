@@ -4,10 +4,13 @@
 // form validation
 // new window 관련 팝업 모듈을 제작하고 해당 모듈에서 처리
 // 유틸모듈을 선언하고 해당 모듈에서 처리
-
+// windowHeader 이벤트 리스너 관련 이슈 빨리 움직이면 안따라옴
+// dom api 활용하기 [O]
+// taskList => 배열로 task 관리 [O]
+// opacity 성능적으로 문제가 있다. display none으로 처리 [O]
 class WindowManager {
   constructor() {
-    this.zIndexCounter = 1;
+    this.panelOrder = [];
     this.pendingChanges = {};
     this.init();
   }
@@ -101,11 +104,7 @@ class WindowManager {
     const content = document.getElementById('window-content').value;
     const timezone = document.getElementById('timezone').value;
 
-    // const panelId = this.panelCounter++;
-
     const panelId = Date.now();
-
-    console.log(panelId);
 
     const windowData = {
       id: panelId,
@@ -113,7 +112,6 @@ class WindowManager {
       height: 300,
       x: 0,
       y: 0,
-      zIndex: 1,
       isHide: false,
       isMaximize: false,
       isMinimize: false,
@@ -150,29 +148,19 @@ class WindowManager {
     const taskItem = event.target.closest('.taskbar-item');
     if (!taskItem) return;
 
-    console.log('taskItem', taskItem);
-
     const panelId = taskItem.dataset.id;
     const panel = document.querySelector(`.window[data-id='${panelId}']`);
 
-    console.log('panel', panel);
-
     if (panel) {
-      if (panel.style.opacity === '1') {
-        panel.style.opacity = '0';
-        this.pendingChanges[`windowData-${panelId}`].isHide = true;
-        console.log(
-          'hide',
-          this.pendingChanges[`windowData-${panelId}`].isHide
-        );
+      if (panel.style.display === 'flex') {
+        panel.style.display = 'none';
+        this.pendingChanges[panelId].isHide = true;
+        console.log('hide', this.pendingChanges[panelId].isHide);
       } else {
-        panel.style.opacity = '1';
-        this.pendingChanges[`windowData-${panelId}`].isHide = false;
-        this.bringToFront(panel, this.pendingChanges[`windowData-${panelId}`]);
-        console.log(
-          'show',
-          this.pendingChanges[`windowData-${panelId}`].isHide
-        );
+        panel.style.display = 'flex';
+        this.pendingChanges[panelId].isHide = false;
+        this.bringToFront(panel, this.pendingChanges[panelId]);
+        console.log('show', this.pendingChanges[panelId].isHide);
       }
     }
   }
@@ -182,7 +170,7 @@ class WindowManager {
       const data = this.pendingChanges[key];
       const panel = document.querySelector(`.window[data-id='${data.id}']`);
       if (panel) {
-        panel.style.opacity = '0';
+        panel.style.display = 'none';
         data.isHide = true;
       }
     });
@@ -194,7 +182,7 @@ class WindowManager {
       data.isHide = false;
       const panel = document.querySelector(`.window[data-id='${data.id}']`);
       if (panel) {
-        panel.style.opacity = '1';
+        panel.style.display = 'flex';
       }
     });
   }
@@ -223,14 +211,27 @@ class WindowManager {
   }
 
   loadPanelsFromStorage() {
-    Object.keys(localStorage).forEach((key) => {
-      if (key.startsWith('windowData-')) {
-        const panelData = JSON.parse(localStorage.getItem(key));
+    const panelArray =
+      JSON.parse(localStorage.getItem('windowDataArray')) || [];
+    this.panelOrder = JSON.parse(localStorage.getItem('panelOrder')) || [];
+
+    console.log('loadPanelsFromStorage', this.panelOrder);
+
+    this.panelOrder.forEach((panelId) => {
+      const panelData = panelArray.find(
+        (data) => console.log(data.id, panelId) || data.id === parseInt(panelId)
+      );
+      if (panelData) {
         this.createPanel(panelData);
         this.updateTaskList(panelData);
-        this.savePendingChanges(panelData);
+        this.pendingChanges[panelData.id] = panelData;
       }
     });
+
+    // panelArray.forEach((panelData) => {
+    //   this.updateTaskList(panelData);
+    //   this.pendingChanges[panelData.id] = panelData;
+    // });
   }
 
   createPanel(windowData) {
@@ -240,17 +241,16 @@ class WindowManager {
     const container = document.createElement('section');
     container.dataset.id = windowData.id;
     container.classList.add('window');
-    container.style.zIndex = windowData.zIndex;
 
     container.innerHTML = `
       <div class='window-header'>
         <div class='window-header-title'>${windowData.title}</div>
+        </div>
         <div class='window-controls'>
           <button class='maximize-button'>&#43;</button>
           <button class='minimize-button'>&#45;</button>
           <button class='close-button'>X</button>
         </div>
-      </div>
       <div class='window-content'>
         ${
           windowData.action === 'browser'
@@ -265,7 +265,7 @@ class WindowManager {
 
     this.addPanelEventListeners(container, windowData);
 
-    if (windowData.isHide) container.style.opacity = '0';
+    if (windowData.isHide) container.style.display = 'none';
     if (windowData.isResize) {
       container.style.width = `${windowData.width}px`;
       container.style.height = `${windowData.height}px`;
@@ -295,11 +295,12 @@ class WindowManager {
 
     minimizeButton.addEventListener('click', () => {
       container.style.display = 'none';
-      windowData.isMinimize = true;
+      windowData.isHide = true;
       this.savePendingChanges(windowData);
     });
 
-    closeButton.addEventListener('click', () => {
+    closeButton.addEventListener('click', (e) => {
+      e.stopPropagation;
       container.remove();
       windowData.isClose = true;
       this.removeTaskFromList(windowData.title);
@@ -311,6 +312,8 @@ class WindowManager {
     });
 
     windowHeader.addEventListener('mousedown', (e) => {
+      // if (e.target.closet('.window-controls')) return;
+      console.log('mousedown', e.target, e.target.closest('.window-controls'));
       this.startDrag(e, container, windowData);
       this.bringToFront(container, windowData);
     });
@@ -323,18 +326,30 @@ class WindowManager {
   }
 
   savePendingChanges(panelData) {
-    this.pendingChanges[`windowData-${panelData.id}`] = panelData;
+    this.pendingChanges[`${panelData.id}`] = panelData;
   }
 
   applyPendingChanges() {
+    let panelArray = JSON.parse(localStorage.getItem('windowDataArray')) || [];
+
+    const panelMap = panelArray.reduce((map, panelData) => {
+      map[panelData.id] = panelData;
+      return map;
+    }, {});
+
     Object.keys(this.pendingChanges).forEach((key) => {
       const panelData = this.pendingChanges[key];
       if (panelData.isClose) {
-        localStorage.removeItem(key);
+        delete panelMap[panelData.id];
       } else {
-        localStorage.setItem(key, JSON.stringify(panelData));
+        panelMap[panelData.id] = panelData;
       }
     });
+
+    panelArray = Object.values(panelMap);
+
+    localStorage.setItem('windowDataArray', JSON.stringify(panelArray));
+    localStorage.setItem('panelOrder', JSON.stringify(this.panelOrder));
     this.pendingChanges = {};
   }
 
@@ -345,16 +360,28 @@ class WindowManager {
     const startLeft = parseFloat(transform[0]);
     const startTop = parseFloat(transform[1]);
 
+    let lastX = startX;
+    let lastY = startY;
+
     const onDrag = (e) => {
       const newX = startLeft + (e.clientX - startX);
       const newY = startTop + (e.clientY - startY);
       container.style.transform = `translate(${newX}px, ${newY}px)`;
-      panelData.x = newX;
-      panelData.y = newY;
-      this.savePendingChanges(panelData);
+      lastX = e.clientX;
+      lastY = e.clientY;
+      // panelData.x = newX;
+      // panelData.y = newY;
+      // this.savePendingChanges(panelData);
     };
 
     const stopDrag = () => {
+      panelData.x = parseFloat(
+        container.style.transform.match(/-?\d+\.?\d*/g)[0]
+      );
+      panelData.y = parseFloat(
+        container.style.transform.match(/-?\d+\.?\d*/g)[1]
+      );
+      this.savePendingChanges(panelData);
       document.removeEventListener('mousemove', onDrag);
       document.removeEventListener('mouseup', stopDrag);
     };
@@ -399,13 +426,19 @@ class WindowManager {
   }
 
   bringToFront(element, panelData) {
-    element.style.zIndex = this.zIndexCounter++;
+    const panelId = element.dataset.id;
+
+    this.panelOrder = this.panelOrder.filter((id) => id !== panelId);
+    this.panelOrder.push(panelId);
+
+    const parent = element.parentNode;
+
+    parent.appendChild(element);
+
     document
       .querySelectorAll('.window')
       .forEach((win) => win.classList.remove('active'));
     element.classList.add('active');
-    panelData.zIndex = parseInt(element.style.zIndex, 10);
-    this.savePendingChanges(panelData);
   }
 
   removeTaskFromList(title) {
@@ -491,5 +524,4 @@ class WindowManager {
   }
 }
 
-// Initialize the window manager
 const windowManager = new WindowManager();
