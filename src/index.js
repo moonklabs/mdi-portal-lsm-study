@@ -59,7 +59,10 @@ class WindowManager {
         .addEventListener('click', () => this.restoreAllPanels());
       document
         .querySelector('.nav-item:nth-child(4)')
-        .addEventListener('click', () => this.arrangePanels());
+        .addEventListener('click', () => this.arrangePanels('grid'));
+      document
+        .querySelector('.nav-item:nth-child(5)')
+        .addEventListener('click', () => this.arrangePanels('stack'));
 
       document.querySelectorAll(['input[name="action"]']).forEach((radio) => {
         radio.addEventListener('change', (event) =>
@@ -187,11 +190,42 @@ class WindowManager {
     });
   }
 
-  arrangePanels() {
+  arrangePanels(type) {
+    if (type === 'grid') {
+      this.arrangePanelsGrid();
+    } else if (type === 'stack') {
+      this.arrangePanelsStack();
+    }
+  }
+
+  arrangePanelsGrid() {
+    const main = document.querySelector('main');
+    const panels = document.querySelectorAll('.window');
+    const numPanels = panels.length;
+    const numCols = Math.ceil(Math.sqrt(numPanels));
+    const numRows = Math.ceil(numPanels / numCols);
+    const panelWidth = main.clientWidth / numCols;
+    const panelHeight = main.clientHeight / numRows;
+
     let leftOffset = 0;
     let topOffset = 0;
-    const panelWidth = 400;
-    const panelHeight = 300;
+    let col = 0;
+
+    panels.forEach((panel) => {
+      panel.style.width = `${panelWidth}px`;
+      panel.style.height = `${panelHeight}px`;
+      panel.style.transform = `translate(${leftOffset}px, ${topOffset}px)`;
+      col++;
+      if (col >= numCols) {
+        col = 0;
+        leftOffset = 0;
+        topOffset += panelHeight;
+      } else {
+        leftOffset += panelWidth;
+      }
+    });
+    this.saveAllPanelPositions();
+  }
 
     Object.keys(this.pendingChanges).forEach((key) => {
       const data = this.pendingChanges[key];
@@ -201,11 +235,50 @@ class WindowManager {
       if (panel) {
         panel.style.transform = `translate(${leftOffset}px, ${topOffset}px)`;
         panel.style.display = 'flex';
+  arrangePanelsStack() {
+    const main = document.querySelector('main');
+    const panels = document.querySelectorAll('.window');
+    const stackOffset = 30;
+
+    const mainWidth = main.clientWidth;
+    const mainHeight = main.clientHeight;
+
+    const panelWidth = mainWidth * 0.5;
+    const panelHeight = mainHeight * 0.5;
+
+    const startX = (mainWidth - panelWidth) / 2;
+    const startY = (mainHeight - panelHeight) / 3;
+
+    panels.forEach((panel, index) => {
+      console.log(panel);
+      panel.style.width = `${panelWidth}px`;
+      panel.style.height = `${panelHeight}px`;
+      panel.style.transform = `translate(${startX + index * stackOffset}px, ${
+        startY + index * stackOffset
+      }px)`;
+    });
+
+    this.saveAllPanelPositions();
+  }
+
+  saveAllPanelPositions() {
+    const panels = document.querySelectorAll('.window');
+    panels.forEach((panel) => {
+      const id = panel.dataset.id;
+      const transform = panel.style.transform.match(/-?\d+\.?\d*/g);
+      const x = parseFloat(transform[0]);
+      const y = parseFloat(transform[1]);
+      const width = panel.clientWidth;
+      const height = panel.clientHeight;
+
+      if (this.pendingChanges[id]) {
+        this.pendingChanges[id].x = x;
+        this.pendingChanges[id].y = y;
+        this.pendingChanges[id].width = width;
+        this.pendingChanges[id].height = height;
       }
-      leftOffset += panelWidth + 10;
-      if (leftOffset + panelWidth > window.innerWidth) {
-        leftOffset = 0;
-        topOffset += panelHeight + 10;
+      if (this.pendingChanges[id].isMaximize) {
+        this.pendingChanges[id].isMaximize = false;
       }
     });
   }
