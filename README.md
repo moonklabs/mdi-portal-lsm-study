@@ -5,7 +5,7 @@ MDI 포털 풀스택 구현 스터디
 ## 1. 개발환경
 
 - ### FE : Vanila JavaScript, HTML, CSS
-- ### BE : Node, Express, MySQL
+- ### BE : Node, Nest, MySQL
 - ### 버전 관리 : Github
 - ### 배포 환경 : AWS
 
@@ -16,29 +16,43 @@ MDI 포털 풀스택 구현 스터디
 ├── LICENSE
 ├── docs
 │    └── daily.md
-└── src
+├── backend
+│    └── src
+│
+├── frontend
+│    └── src
+│         ├── index.html
+│         ├── index.js
+│         └── styles.css
+
 ```
 
 ## 기능과 UI
 
-- ### 기능
+- ### FE
+
+  - [O] 새로운 윈도우 생성
+  - [O] 윈도우 Drag & Drop
+  - [O] 윈도우 숨기기 및 최대화
+  - [O] 사용중인 윈도우를 정렬 기능
+  - [O] 모든 윈도우 열기 및 최소화
+
+- ### BE
 
   - [ ] 회원가입, 로그인, 로그아웃
-  - [ ] 새로운 윈도우 생성
   - [ ] 로그인 상태에서 윈도우 저장 기능
-  - [ ] 윈도우 Drag & Drop
-  - [ ] 윈도우 숨기기 및 최대화
-  - [ ] 사용중인 윈도우를 한 곳에 정렬하는 기능
-  - [ ] 모든 윈도우 열기 및 최소화
+  - [ ] 생성된 윈도우 GET API
+  - [ ] 윈도우 생성 POST API
+  - [ ] 윈도우 저장 PUT API
 
 - ### UI
   - [ ] 회원가입 폼
   - [ ] 로그인 폼
-  - [ ] 새로운 작업 생성 폼
-  - [ ] 상단 header에 제목 표시
+  - [O] 새로운 작업 생성 폼
+  - [O] 상단 header에 제목 표시
   - [ ] header 우측에 닉네임(로그인 상태) 표시
-  - [ ] Taskbar 진행 작업 표시
-  - [ ] Taskbar nav 활성화 버튼
+  - [O] Taskbar 진행 작업 표시
+  - [O] Taskbar nav 활성화 버튼
 
 ## 개발 일정
 
