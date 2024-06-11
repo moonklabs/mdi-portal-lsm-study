@@ -535,7 +535,10 @@ class WindowManager {
               : ''
         }
       </div>
-      <div class='resize-handle'></div>
+      <div class='resize-handle top-left'></div>
+      <div class='resize-handle top-right'></div>
+      <div class='resize-handle bottom-left'></div>
+      <div class='resize-handle bottom-right'></div>
     `;
 
     this.addPanelEventListeners(container, windowData);
@@ -576,7 +579,7 @@ class WindowManager {
     const maximizeButton = container.querySelector('.maximize-button');
     const minimizeButton = container.querySelector('.minimize-button');
     const closeButton = container.querySelector('.close-button');
-    const resizeHandle = container.querySelector('.resize-handle');
+    const resizeHandles = container.querySelectorAll('.resize-handle');
     const windowHeader = container.querySelector('.window-header-bar');
 
     maximizeButton.addEventListener('click', () => {
@@ -603,8 +606,10 @@ class WindowManager {
       this.savePendingChanges(windowData);
     });
 
-    resizeHandle.addEventListener('mousedown', (e) => {
-      this.startResize(e, container, windowData);
+    resizeHandles.forEach((handle) => {
+      handle.addEventListener('mousedown', (e) => {
+        this.startResize(e, container, windowData, handle.classList[1]);
+      });
     });
 
     windowHeader.addEventListener('mousedown', (e) => {
@@ -690,19 +695,92 @@ class WindowManager {
     document.addEventListener('mouseup', stopDrag);
   }
 
-  startResize(e, container, panelData) {
+  // startResize(e, container, panelData) {
+  //   const startX = e.clientX;
+  //   const startY = e.clientY;
+  //   const startWidth = container.offsetWidth;
+  //   const startHeight = container.offsetHeight;
+  //   const startLeft = container.getBoundingClientRect().left;
+  //   const startTop = container.getBoundingClientRect().top;
+
+  //   const onResize = (e) => {
+  //     const newWidth = startWidth + (e.clientX - startX);
+  //     const newHeight = startHeight + (e.clientY - startY);
+  //     container.style.width = `${newWidth}px`;
+  //     container.style.height = `${newHeight}px`;
+  //     panelData.width = newWidth;
+  //     panelData.height = newHeight;
+  //     panelData.isResize = true;
+  //     panelData.isMaximize = false;
+  //     this.savePendingChanges(panelData);
+  //   };
+
+  //   const stopResize = () => {
+  //     document.removeEventListener('mousemove', onResize);
+  //     document.removeEventListener('mouseup', stopResize);
+  //   };
+
+  //   document.addEventListener('mousemove', onResize);
+  //   document.addEventListener('mouseup', stopResize);
+  // }
+
+  startResize(e, container, panelData, handleType) {
+    e.preventDefault();
     const startX = e.clientX;
     const startY = e.clientY;
     const startWidth = container.offsetWidth;
     const startHeight = container.offsetHeight;
 
+    const transformValues = container.style.transform.match(/-?\d+\.?\d*/g);
+    const startLeft = parseFloat(transformValues[0]);
+    const startTop = parseFloat(transformValues[1]);
+
     const onResize = (e) => {
-      const newWidth = startWidth + (e.clientX - startX);
-      const newHeight = startHeight + (e.clientY - startY);
+      e.preventDefault();
+      let newWidth = startWidth;
+      let newHeight = startHeight;
+      let newLeft = startLeft;
+      let newTop = startTop;
+
+      if (handleType.includes('right')) {
+        newWidth = startWidth + (e.clientX - startX);
+      }
+      if (handleType.includes('left')) {
+        newWidth = startWidth - (e.clientX - startX);
+        newLeft = startLeft + (e.clientX - startX);
+      }
+      if (handleType.includes('bottom')) {
+        newHeight = startHeight + (e.clientY - startY);
+      }
+      if (handleType.includes('top')) {
+        newHeight = startHeight - (e.clientY - startY);
+        newTop = startTop + (e.clientY - startY);
+      }
+
+      console.log(
+        container.style.transform,
+        newLeft,
+        newTop,
+        newWidth,
+        newHeight
+      );
+
       container.style.width = `${newWidth}px`;
       container.style.height = `${newHeight}px`;
+      container.style.transform = `translate(${newLeft}px, ${newTop}px)`;
+
+      console.log(
+        container.style.transform,
+        newLeft,
+        newTop,
+        newWidth,
+        newHeight
+      );
+
       panelData.width = newWidth;
       panelData.height = newHeight;
+      panelData.x = newLeft;
+      panelData.y = newTop;
       panelData.isResize = true;
       panelData.isMaximize = false;
       this.savePendingChanges(panelData);
