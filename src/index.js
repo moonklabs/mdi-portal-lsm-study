@@ -1,20 +1,3 @@
-// 고도화
-// new window 관련 팝업 모듈을 제작하고 해당 모듈에서 처리
-// 유틸모듈을 선언하고 해당 모듈에서 처리
-// windowHeader 이벤트 리스너 관련 이슈 빨리 움직이면 안따라옴
-// dom api 활용하기 [O]
-// taskList => 배열로 task 관리 [O]
-// opacity 성능적으로 문제가 있다. display none으로 처리 [O]
-
-// 2024.06.08
-// windowControll 클릭 안됨 [O]
-// 패널 지우면 panelOrder에도 지워야함 [O]
-// 정렬 -> grid, stack [O]
-
-// 2024.06.09
-// form validation
-// 드래그앤드랍 최적화
-
 class WindowManager {
   constructor() {
     this.panelOrder = [];
@@ -23,8 +6,20 @@ class WindowManager {
   }
 
   init() {
+    this.checkLoginStatus();
     this.initEventListeners();
-    this.loadPanelsFromStorage();
+    this.loadPanelsFromServer();
+  }
+
+  checkLoginStatus() {
+    const token = localStorage.getItem('token');
+    const username = localStorage.getItem('username');
+    if (token && username) {
+      this.updateHeaderWithUsername(username);
+      this.toggleAuthRequiredElements(true);
+    } else {
+      this.toggleAuthRequiredElements(false);
+    }
   }
 
   initEventListeners() {
@@ -38,8 +33,20 @@ class WindowManager {
       const saveButton = document.getElementById('save-button');
       const taskList = document.querySelector('.taskbar-items');
 
+      const signupButton = document.getElementById('signup-button');
+      const loginButton = document.getElementById('login-button');
+      const logoutButton = document.getElementById('logout-button');
+      const signupModal = document.getElementById('signup-modal');
+      const loginModal = document.getElementById('login-modal');
+      const closeSignupButton = signupModal.querySelector('.close-button');
+      const closeLoginButton = loginModal.querySelector('.close-button');
+      const signupForm = document.getElementById('signup-form');
+      const loginForm = document.getElementById('login-form');
+
       if (!modal.showModal) {
         dialogPolyfill.registerDialog(modal);
+        dialogPolyfill.registerDialog(signupModal);
+        dialogPolyfill.registerDialog(loginModal);
       }
 
       nav.addEventListener('click', (event) =>
@@ -57,6 +64,28 @@ class WindowManager {
       taskList.addEventListener('click', (event) =>
         this.handleTaskItemClick(event)
       );
+
+      signupButton.addEventListener('click', () => {
+        signupModal.showModal();
+      });
+
+      closeSignupButton.addEventListener('click', () => {
+        signupModal.close();
+      });
+
+      signupForm.addEventListener('submit', (e) => this.handleSignupSubmit(e));
+
+      loginButton.addEventListener('click', () => {
+        loginModal.showModal();
+      });
+
+      closeLoginButton.addEventListener('click', () => {
+        loginModal.close();
+      });
+
+      loginForm.addEventListener('submit', (e) => this.handleLoginSubmit(e));
+
+      logoutButton.addEventListener('click', () => this.handleLogout());
 
       document
         .querySelector('.nav-item:nth-child(2)')
@@ -79,6 +108,144 @@ class WindowManager {
     });
   }
 
+  async loadPanelsFromServer() {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    try {
+      const response = await fetch('http://localhost:3000/panels', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log('response', response);
+      if (response.ok) {
+        const panels = await response.json();
+        console.log('패널 불러오기 성공:', panels);
+        panels
+          .sort((a, b) => a.order - b.order)
+          .forEach((panelData) => {
+            this.pendingChanges[panelData.id] = panelData;
+            this.createPanel(panelData);
+            this.updateTaskList(panelData);
+          });
+      } else {
+        console.error('패널 불러오기 실패:', response.statusText);
+      }
+    } catch (error) {
+      console.error('패널 불러오기 오류:', error);
+    }
+  }
+
+  async handleSignupSubmit(e) {
+    e.preventDefault();
+    const username = document.getElementById('signup-username').value;
+    const password = document.getElementById('signup-password').value;
+
+    try {
+      const response = await fetch('http://localhost:3000/auth/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (response.ok) {
+        alert('회원가입 성공');
+        document.getElementById('signup-modal').close();
+      } else {
+        const errorData = await response.json();
+        alert(`회원가입 실패: ${errorData.message}`);
+      }
+    } catch (error) {
+      console.error('회원가입 오류:', error);
+      alert('회원가입 중 오류가 발생했습니다.');
+    }
+  }
+
+  async handleLoginSubmit(e) {
+    e.preventDefault();
+    const username = document.getElementById('login-username').value;
+    const password = document.getElementById('login-password').value;
+
+    try {
+      const response = await fetch('http://localhost:3000/auth/signin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('token', data.accessToken);
+        localStorage.setItem('username', username);
+        this.updateHeaderWithUsername(username);
+        document.getElementById('login-modal').close();
+        this.toggleAuthRequiredElements(true);
+        this.loadPanelsFromServer(); // Load panels after successful login
+      } else {
+        const errorData = await response.json();
+        alert(`로그인 실패: ${errorData.message}`);
+      }
+    } catch (error) {
+      console.error('로그인 오류:', error);
+      alert('로그인 중 오류가 발생했습니다.');
+    }
+  }
+
+  handleLogout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    this.updateHeaderWithUsername(null);
+    this.toggleAuthRequiredElements(false);
+    this.clearPanels();
+    this.clearTaskList();
+  }
+
+  updateHeaderWithUsername(username) {
+    let userDisplay = document.getElementById('user-display');
+    if (!userDisplay) {
+      userDisplay = document.createElement('div');
+      userDisplay.id = 'user-display';
+      const header = document.querySelector('header');
+      header.appendChild(userDisplay);
+    }
+    userDisplay.textContent = username ? `환영합니다, ${username}님!` : '';
+  }
+
+  toggleAuthRequiredElements(isAuthenticated) {
+    const elements = document.querySelectorAll('.auth-required');
+    elements.forEach((element) => {
+      element.style.display = isAuthenticated ? 'block' : 'none';
+    });
+
+    document.getElementById('signup-button').style.display = isAuthenticated
+      ? 'none'
+      : 'inline-block';
+    document.getElementById('login-button').style.display = isAuthenticated
+      ? 'none'
+      : 'inline-block';
+    document.getElementById('logout-button').style.display = isAuthenticated
+      ? 'inline-block'
+      : 'none';
+  }
+
+  clearPanels() {
+    const main = document.querySelector('main');
+    main.innerHTML = '';
+    this.panelOrder = [];
+    this.pendingChanges = {};
+  }
+
+  clearTaskList() {
+    const taskList = document.querySelector('.taskbar-items');
+    taskList.innerHTML = '<li class="taskbar-item">시작</li>';
+  }
+
   toggleNavMenu(event, navMenu) {
     event.stopPropagation();
     navMenu.classList.toggle('nav-menu--visible');
@@ -98,6 +265,11 @@ class WindowManager {
 
   openModal(e, modal, navMenu) {
     e.stopPropagation();
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('로그인이 필요합니다.');
+      return;
+    }
     modal.showModal();
     navMenu.classList.remove('nav-menu--visible');
   }
@@ -114,10 +286,7 @@ class WindowManager {
     const content = document.getElementById('window-content').value;
     const timezone = document.getElementById('timezone').value;
 
-    const panelId = Date.now();
-
     const windowData = {
-      id: panelId,
       width: 400,
       height: 300,
       x: 0,
@@ -134,12 +303,39 @@ class WindowManager {
       title,
       content,
       timezone,
+      order: this.panelOrder.length,
     };
 
     this.createPanel(windowData);
     this.updateTaskList(windowData);
-    this.savePendingChanges(windowData);
+
     modal.close();
+  }
+
+  async savePanelToServer(panelData) {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    try {
+      const response = await fetch('http://localhost:3000/panels', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(panelData),
+      });
+
+      if (response.ok) {
+        const savedPanel = await response.json();
+        console.log('패널 생성 성공:', savedPanel);
+        this.pendingChanges[savedPanel.id] = savedPanel;
+      } else {
+        console.error('패널 생성 실패:', response.statusText);
+      }
+    } catch (error) {
+      console.error('패널 생성 오류:', error);
+    }
   }
 
   handleActionChange(event) {
@@ -292,7 +488,7 @@ class WindowManager {
     this.panelOrder.length !== 0
       ? this.panelOrder.forEach((panelId) => {
           const panelData = this.findPanelById(panelArray, panelId);
-          console.log('panelData', panelData)
+          console.log('panelData', panelData);
           if (panelData) {
             this.createPanel(panelData);
             this.updateTaskList(panelData);
@@ -315,6 +511,7 @@ class WindowManager {
 
     const main = document.querySelector('main');
     const container = document.createElement('section');
+    console.log('createPanel', windowData);
     container.dataset.id = windowData.id;
     container.classList.add('window');
 
@@ -344,13 +541,11 @@ class WindowManager {
     this.addPanelEventListeners(container, windowData);
 
     if (windowData.isHide) container.style.display = 'none';
-    // if (windowData.isResize) {
     container.style.width = `${windowData.width}px`;
     container.style.height = `${windowData.height}px`;
-    // }
+
     if (windowData.isMaximize) {
       this.maximizePanel(container);
-      console.log('maximize', windowData);
     }
 
     container.style.transform = `translate(${windowData.x}px, ${windowData.y}px)`;
@@ -359,6 +554,22 @@ class WindowManager {
     if (windowData.action === 'clock') {
       this.displayClock(container.querySelector('.clock'), windowData.timezone);
     }
+
+    this.panelOrder.push(windowData.id);
+    this.panelOrder.sort(
+      (a, b) => this.pendingChanges[a].order - this.pendingChanges[b].order
+    );
+    this.reorderPanels();
+  }
+
+  reorderPanels() {
+    const main = document.querySelector('main');
+    this.panelOrder.forEach((panelId) => {
+      const panel = document.querySelector(`.window[data-id='${panelId}']`);
+      if (panel) {
+        main.appendChild(panel);
+      }
+    });
   }
 
   addPanelEventListeners(container, windowData) {
@@ -410,35 +621,45 @@ class WindowManager {
 
   removeFromPanelOrder(panelId) {
     this.panelOrder = this.panelOrder.filter((id) => parseInt(id) !== panelId);
-    localStorage.setItem('panelOrder', JSON.stringify(this.panelOrder));
   }
 
   savePendingChanges(panelData) {
     this.pendingChanges[`${panelData.id}`] = panelData;
   }
 
-  applyPendingChanges() {
-    let panelArray = JSON.parse(localStorage.getItem('windowDataArray')) || [];
+  async applyPendingChanges() {
+    const token = localStorage.getItem('token');
+    if (!token) return;
 
-    const panelMap = panelArray.reduce((map, panelData) => {
-      map[panelData.id] = panelData;
-      return map;
-    }, {});
+    let panelArray = Object.values(this.pendingChanges);
 
-    Object.keys(this.pendingChanges).forEach((key) => {
-      const panelData = this.pendingChanges[key];
-      if (panelData.isClose) {
-        delete panelMap[panelData.id];
+    try {
+      const response = await fetch('http://localhost:3000/panels/save', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(panelArray),
+      });
+      console.log('panelArray', panelArray);
+      if (response.ok) {
+        const savePanels = await response.json();
+        console.log('패널 저장 성공:', savePanels);
+        savePanels.forEach((panelData) => {
+          this.pendingChanges[panelData.id] = panelData;
+          console.log(this.pendingChanges);
+        });
+        this.pendingChanges = {};
+        alert('패널이 성공적으로 저장되었습니다.');
       } else {
-        panelMap[panelData.id] = panelData;
+        console.error('패널 저장 실패:', response.statusText);
+        alert('패널 저장 중 오류가 발생했습니다.');
       }
-    });
-
-    panelArray = Object.values(panelMap);
-
-    localStorage.setItem('windowDataArray', JSON.stringify(panelArray));
-    localStorage.setItem('panelOrder', JSON.stringify(this.panelOrder));
-    this.pendingChanges = {};
+    } catch (error) {
+      console.error('패널 저장 오류:', error);
+      alert('패널 저장 중 오류가 발생했습니다.');
+    }
   }
 
   startDrag(e, container, panelData) {
@@ -448,9 +669,6 @@ class WindowManager {
     const transform = container.style.transform.match(/-?\d+\.?\d*/g);
     const startLeft = parseFloat(transform[0]);
     const startTop = parseFloat(transform[1]);
-
-    const mainRect = main.getBoundingClientRect();
-    const containerRect = container.getBoundingClientRect();
 
     const onDrag = (e) => {
       const newX = startLeft + (e.clientX - startX);
@@ -513,7 +731,14 @@ class WindowManager {
     parent.appendChild(element);
 
     this.panelOrder = Array.from(parent.querySelectorAll('section.window')).map(
-      (section) => section.dataset.id
+      (section, index) => {
+        const panelId = section.dataset.id;
+        if (!this.pendingChanges[panelId]) {
+          this.pendingChanges[panelId] = {};
+        }
+        this.pendingChanges[panelId].order = index;
+        return panelId;
+      }
     );
 
     document
@@ -534,6 +759,8 @@ class WindowManager {
 
   updateTaskList(panelData) {
     if (panelData.isClose) return;
+
+    console.log('updateTaskList', panelData);
 
     const taskList = document.querySelector('.taskbar-items');
     const task = document.createElement('li');

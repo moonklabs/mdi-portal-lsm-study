@@ -262,3 +262,35 @@ dialog::backdrop {
   background-color: #ccc;
   cursor: nwse-resize;
 }
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form label {
+  margin: 10px 0 5px;
+}
+
+.form input[type='text'],
+.form input[type='password'],
+.form select {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: calc(100% - 22px); /* Adjusting for padding and border */
+}
+
+.form button {
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.form button:hover {
+  background-color: #0056b3;
+}
