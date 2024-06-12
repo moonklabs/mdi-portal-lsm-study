@@ -122,7 +122,6 @@ class WindowManager {
       console.log('response', response);
       if (response.ok) {
         const panels = await response.json();
-        console.log('패널 불러오기 성공:', panels);
         panels
           .sort((a, b) => a.order - b.order)
           .forEach((panelData) => {
@@ -186,7 +185,7 @@ class WindowManager {
         this.updateHeaderWithUsername(username);
         document.getElementById('login-modal').close();
         this.toggleAuthRequiredElements(true);
-        this.loadPanelsFromServer(); // Load panels after successful login
+        this.loadPanelsFromServer();
       } else {
         const errorData = await response.json();
         alert(`로그인 실패: ${errorData.message}`);
@@ -308,6 +307,7 @@ class WindowManager {
 
     this.createPanel(windowData);
     this.updateTaskList(windowData);
+    this.savePendingChanges(windowData);
 
     modal.close();
   }
@@ -511,7 +511,6 @@ class WindowManager {
 
     const main = document.querySelector('main');
     const container = document.createElement('section');
-    console.log('createPanel', windowData);
     container.dataset.id = windowData.id;
     container.classList.add('window');
 
@@ -638,6 +637,8 @@ class WindowManager {
 
     let panelArray = Object.values(this.pendingChanges);
 
+    console.log('panelArray', panelArray);
+
     try {
       const response = await fetch('http://localhost:3000/panels/save', {
         method: 'POST',
@@ -647,11 +648,11 @@ class WindowManager {
         },
         body: JSON.stringify(panelArray),
       });
-      console.log('panelArray', panelArray);
       if (response.ok) {
         const savePanels = await response.json();
         console.log('패널 저장 성공:', savePanels);
         savePanels.forEach((panelData) => {
+          console.log('panelData', panelData);
           this.pendingChanges[panelData.id] = panelData;
           console.log(this.pendingChanges);
         });
@@ -695,35 +696,6 @@ class WindowManager {
     document.addEventListener('mouseup', stopDrag);
   }
 
-  // startResize(e, container, panelData) {
-  //   const startX = e.clientX;
-  //   const startY = e.clientY;
-  //   const startWidth = container.offsetWidth;
-  //   const startHeight = container.offsetHeight;
-  //   const startLeft = container.getBoundingClientRect().left;
-  //   const startTop = container.getBoundingClientRect().top;
-
-  //   const onResize = (e) => {
-  //     const newWidth = startWidth + (e.clientX - startX);
-  //     const newHeight = startHeight + (e.clientY - startY);
-  //     container.style.width = `${newWidth}px`;
-  //     container.style.height = `${newHeight}px`;
-  //     panelData.width = newWidth;
-  //     panelData.height = newHeight;
-  //     panelData.isResize = true;
-  //     panelData.isMaximize = false;
-  //     this.savePendingChanges(panelData);
-  //   };
-
-  //   const stopResize = () => {
-  //     document.removeEventListener('mousemove', onResize);
-  //     document.removeEventListener('mouseup', stopResize);
-  //   };
-
-  //   document.addEventListener('mousemove', onResize);
-  //   document.addEventListener('mouseup', stopResize);
-  // }
-
   startResize(e, container, panelData, handleType) {
     e.preventDefault();
     const startX = e.clientX;
@@ -757,25 +729,9 @@ class WindowManager {
         newTop = startTop + (e.clientY - startY);
       }
 
-      console.log(
-        container.style.transform,
-        newLeft,
-        newTop,
-        newWidth,
-        newHeight
-      );
-
       container.style.width = `${newWidth}px`;
       container.style.height = `${newHeight}px`;
       container.style.transform = `translate(${newLeft}px, ${newTop}px)`;
-
-      console.log(
-        container.style.transform,
-        newLeft,
-        newTop,
-        newWidth,
-        newHeight
-      );
 
       panelData.width = newWidth;
       panelData.height = newHeight;
