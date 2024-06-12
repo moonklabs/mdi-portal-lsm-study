@@ -127,8 +127,8 @@ class WindowManager {
           .forEach((panelData) => {
             this.pendingChanges[panelData.id] = panelData;
             this.createPanel(panelData);
-            this.updateTaskList(panelData);
           });
+        this.updateTaskList(panels);
       } else {
         console.error('패널 불러오기 실패:', response.statusText);
       }
@@ -236,7 +236,7 @@ class WindowManager {
   clearPanels() {
     const main = document.querySelector('main');
     main.innerHTML = '';
-    this.panelOrder = [];
+    // this.panelOrder = [];
     this.pendingChanges = {};
   }
 
@@ -285,7 +285,13 @@ class WindowManager {
     const content = document.getElementById('window-content').value;
     const timezone = document.getElementById('timezone').value;
 
+    if (action === 'clock' && timezone === 'default') {
+      alert('시계 패널을 생성하려면 타임존을 선택해주세요.');
+      return;
+    }
+
     const windowData = {
+      id: `temp-${Date.now()}`,
       width: 400,
       height: 300,
       x: 0,
@@ -306,7 +312,7 @@ class WindowManager {
     };
 
     this.createPanel(windowData);
-    this.updateTaskList(windowData);
+    this.updateTaskList([windowData]);
     this.savePendingChanges(windowData);
 
     modal.close();
@@ -478,30 +484,6 @@ class WindowManager {
     });
   }
 
-  loadPanelsFromStorage() {
-    const panelArray =
-      JSON.parse(localStorage.getItem('windowDataArray')) || [];
-    this.panelOrder = JSON.parse(localStorage.getItem('panelOrder')) || [];
-
-    console.log('loadPanelsFromStorage', this.panelOrder);
-
-    this.panelOrder.length !== 0
-      ? this.panelOrder.forEach((panelId) => {
-          const panelData = this.findPanelById(panelArray, panelId);
-          console.log('panelData', panelData);
-          if (panelData) {
-            this.createPanel(panelData);
-            this.updateTaskList(panelData);
-            this.pendingChanges[panelData.id] = panelData;
-          }
-        })
-      : panelArray.forEach((panelData) => {
-          this.createPanel(panelData);
-          this.updateTaskList(panelData);
-          this.pendingChanges[panelData.id] = panelData;
-        });
-  }
-
   findPanelById(panelArray, panelId) {
     return panelArray.find((data) => data.id === parseInt(panelId));
   }
@@ -556,22 +538,6 @@ class WindowManager {
     if (windowData.action === 'clock') {
       this.displayClock(container.querySelector('.clock'), windowData.timezone);
     }
-
-    this.panelOrder.push(windowData.id);
-    this.panelOrder.sort(
-      (a, b) => this.pendingChanges[a].order - this.pendingChanges[b].order
-    );
-    this.reorderPanels();
-  }
-
-  reorderPanels() {
-    const main = document.querySelector('main');
-    this.panelOrder.forEach((panelId) => {
-      const panel = document.querySelector(`.window[data-id='${panelId}']`);
-      if (panel) {
-        main.appendChild(panel);
-      }
-    });
   }
 
   addPanelEventListeners(container, windowData) {
@@ -791,24 +757,32 @@ class WindowManager {
     });
   }
 
-  updateTaskList(panelData) {
-    if (panelData.isClose) return;
+  updateTaskList(panels) {
+    if (!Array.isArray(panels)) {
+      panels = [panels];
+    }
 
-    console.log('updateTaskList', panelData);
+    panels
+      .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
+      .forEach((panelData) => {
+        if (panelData.isClose) return;
 
-    const taskList = document.querySelector('.taskbar-items');
-    const task = document.createElement('li');
-    task.classList.add('taskbar-item');
-    task.dataset.id = panelData.id;
-    task.innerHTML = `<span>${panelData.title}</span>`;
-    task.draggable = true;
+        console.log('updateTaskList', panelData);
 
-    task.addEventListener('dragstart', this.handleDragStart.bind(this));
-    task.addEventListener('dragover', this.handleDragOver.bind(this));
-    task.addEventListener('drop', this.handleDrop.bind(this));
-    task.addEventListener('dragend', this.handleDragEnd.bind(this));
+        const taskList = document.querySelector('.taskbar-items');
+        const task = document.createElement('li');
+        task.classList.add('taskbar-item');
+        task.dataset.id = panelData.id;
+        task.innerHTML = `<span>${panelData.title}</span>`;
+        task.draggable = true;
 
-    taskList.appendChild(task);
+        task.addEventListener('dragstart', this.handleDragStart.bind(this));
+        task.addEventListener('dragover', this.handleDragOver.bind(this));
+        task.addEventListener('drop', this.handleDrop.bind(this));
+        task.addEventListener('dragend', this.handleDragEnd.bind(this));
+
+        taskList.appendChild(task);
+      });
   }
 
   handleDragStart(e) {
