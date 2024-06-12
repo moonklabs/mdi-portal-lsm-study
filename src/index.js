@@ -1,6 +1,5 @@
 class WindowManager {
   constructor() {
-    this.panelOrder = [];
     this.pendingChanges = {};
     this.init();
   }
@@ -308,7 +307,8 @@ class WindowManager {
       title,
       content,
       timezone,
-      order: this.panelOrder.length,
+      // order: this.panelOrder.length,
+      order: Object.keys(this.pendingChanges).length,
     };
 
     this.createPanel(windowData);
@@ -567,7 +567,6 @@ class WindowManager {
       container.remove();
       windowData.isClose = true;
       this.removeTaskFromList(windowData.title);
-      this.removeFromPanelOrder(windowData.id);
       this.savePendingChanges(windowData);
     });
 
@@ -587,10 +586,6 @@ class WindowManager {
       windowData.isMaximize = true;
       this.savePendingChanges(windowData);
     });
-  }
-
-  removeFromPanelOrder(panelId) {
-    this.panelOrder = this.panelOrder.filter((id) => parseInt(id) !== panelId);
   }
 
   savePendingChanges(panelData) {
@@ -730,14 +725,13 @@ class WindowManager {
 
     parent.appendChild(element);
 
-    this.panelOrder = Array.from(parent.querySelectorAll('section.window')).map(
+    Array.from(parent.querySelectorAll('section.window')).forEach(
       (section, index) => {
         const panelId = section.dataset.id;
-        if (!this.pendingChanges[panelId]) {
-          this.pendingChanges[panelId] = {};
-        }
+        // if (!this.pendingChanges[panelId]) {
+        //   this.pendingChanges[panelId] = {};
+        // }
         this.pendingChanges[panelId].order = index;
-        return panelId;
       }
     );
 
