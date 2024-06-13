@@ -1,9 +1,9 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class UpdateUserAndPanelTables1718125580694
+export class UpdateUserAndPanelTables1718266159626
   implements MigrationInterface
 {
-  name = 'UpdateUserAndPanelTables1718125580694';
+  name = 'UpdateUserAndPanelTables1718266159626';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -20,10 +20,6 @@ export class UpdateUserAndPanelTables1718125580694
     await queryRunner.query(`ALTER TABLE \`panel\` DROP COLUMN \`timezone\``);
     await queryRunner.query(
       `ALTER TABLE \`panel\` ADD \`timezone\` varchar(255) NOT NULL`,
-    );
-    await queryRunner.query(`ALTER TABLE \`user\` DROP COLUMN \`createdAt\``);
-    await queryRunner.query(
-      `ALTER TABLE \`user\` ADD \`createdAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)`,
     );
     await queryRunner.query(
       `DROP INDEX \`IDX_78a916df40e02a9deb1c4b75ed\` ON \`user\``,
@@ -61,10 +57,6 @@ export class UpdateUserAndPanelTables1718125580694
     );
     await queryRunner.query(
       `CREATE UNIQUE INDEX \`IDX_78a916df40e02a9deb1c4b75ed\` ON \`user\` (\`username\`)`,
-    );
-    await queryRunner.query(`ALTER TABLE \`user\` DROP COLUMN \`createdAt\``);
-    await queryRunner.query(
-      `ALTER TABLE \`user\` ADD \`createdAt\` timestamp(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6)`,
     );
     await queryRunner.query(`ALTER TABLE \`panel\` DROP COLUMN \`timezone\``);
     await queryRunner.query(
