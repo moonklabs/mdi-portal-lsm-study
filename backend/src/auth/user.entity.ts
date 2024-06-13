@@ -13,12 +13,6 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn({ type: 'timestamp' })
-  modifiedAt: Date;
-
   @Column({ unique: true })
   username: string;
 
@@ -27,4 +21,10 @@ export class User {
 
   @OneToMany(() => Panel, (panel) => panel.user)
   panels: Panel[];
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn({ type: 'timestamp' })
+  modifiedAt: Date;
 }
