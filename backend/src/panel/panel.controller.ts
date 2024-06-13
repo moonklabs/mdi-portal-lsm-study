@@ -21,7 +21,7 @@ import {
 
 @ApiTags('panels')
 @ApiBearerAuth()
-@Controller('panels')
+@Controller('/api/panels')
 export class PanelController {
   constructor(private readonly panelService: PanelService) {}
 

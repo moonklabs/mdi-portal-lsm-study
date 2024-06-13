@@ -1,3 +1,11 @@
+// 스웨거 -> 완료
+// readME 및 문서화 정리 -> 주말예정
+// id, pw 순서 DB -> 완료
+// sql lite -> 완료
+// postgre sql -> 진행중
+
+// firebase auth
+
 class WindowManager {
   constructor() {
     this.pendingChanges = {};
@@ -112,7 +120,7 @@ class WindowManager {
     if (!token) return;
 
     try {
-      const response = await fetch('http://localhost:3000/panels', {
+      const response = await fetch('http://localhost:3000/api/panels', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -142,7 +150,7 @@ class WindowManager {
     const password = document.getElementById('signup-password').value;
 
     try {
-      const response = await fetch('http://localhost:3000/auth/signup', {
+      const response = await fetch('http://localhost:3000/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -169,7 +177,7 @@ class WindowManager {
     const password = document.getElementById('login-password').value;
 
     try {
-      const response = await fetch('http://localhost:3000/auth/signin', {
+      const response = await fetch('http://localhost:3000/api/auth/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -183,6 +191,7 @@ class WindowManager {
         localStorage.setItem('username', username);
         this.updateHeaderWithUsername(username);
         document.getElementById('login-modal').close();
+        document.getElementById('login-form').reset();
         this.toggleAuthRequiredElements(true);
         this.loadPanelsFromServer();
       } else {
@@ -307,7 +316,6 @@ class WindowManager {
       title,
       content,
       timezone,
-      // order: this.panelOrder.length,
       order: Object.keys(this.pendingChanges).length,
     };
 
@@ -323,7 +331,7 @@ class WindowManager {
     if (!token) return;
 
     try {
-      const response = await fetch('http://localhost:3000/panels', {
+      const response = await fetch('http://localhost:3000/api/panels', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -512,8 +520,8 @@ class WindowManager {
           windowData.action === 'browser'
             ? `<iframe src="${windowData.content}" frameborder="0"></iframe>`
             : windowData.action === 'clock'
-              ? `<div class="clock" data-timezone="${windowData.timezone}"></div>`
-              : ''
+            ? `<div class="clock" data-timezone="${windowData.timezone}"></div>`
+            : ''
         }
       </div>
       <div class='resize-handle top-left'></div>
@@ -533,6 +541,7 @@ class WindowManager {
     }
 
     container.style.transform = `translate(${windowData.x}px, ${windowData.y}px)`;
+
     main.appendChild(container);
 
     if (windowData.action === 'clock') {
@@ -546,6 +555,7 @@ class WindowManager {
     const closeButton = container.querySelector('.close-button');
     const resizeHandles = container.querySelectorAll('.resize-handle');
     const windowHeader = container.querySelector('.window-header-bar');
+    const window = container.querySelector('.window-content');
 
     maximizeButton.addEventListener('click', () => {
       this.maximizePanel(container, windowData);
@@ -576,15 +586,13 @@ class WindowManager {
       });
     });
 
-    windowHeader.addEventListener('mousedown', (e) => {
-      this.startDrag(e, container, windowData);
+    window.addEventListener('mousedown', () => {
       this.bringToFront(container, windowData);
     });
 
-    windowHeader.addEventListener('dblclick', () => {
-      this.maximizePanel(container);
-      windowData.isMaximize = true;
-      this.savePendingChanges(windowData);
+    windowHeader.addEventListener('mousedown', (e) => {
+      this.startDrag(e, container, windowData);
+      this.bringToFront(container, windowData);
     });
   }
 
@@ -601,7 +609,7 @@ class WindowManager {
     console.log('panelArray', panelArray);
 
     try {
-      const response = await fetch('http://localhost:3000/panels/save', {
+      const response = await fetch('http://localhost:3000/api/panels/save', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -723,14 +731,14 @@ class WindowManager {
   bringToFront(element) {
     const parent = element.parentNode;
 
+    if (element.classList.contains('active')) return;
+
     parent.appendChild(element);
 
     Array.from(parent.querySelectorAll('section.window')).forEach(
       (section, index) => {
         const panelId = section.dataset.id;
-        // if (!this.pendingChanges[panelId]) {
-        //   this.pendingChanges[panelId] = {};
-        // }
+
         this.pendingChanges[panelId].order = index;
       }
     );
