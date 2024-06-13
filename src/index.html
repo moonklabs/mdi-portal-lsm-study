@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styles.css" />
-    <title>Document</title>
+    <title>LSM MDI</title>
   </head>
   <body>
     <header>
@@ -14,6 +14,16 @@
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/dialog-polyfill/0.5.6/dialog-polyfill.min.css"
       />
+      <button id="save-button" class="button">저장</button>
+      <button id="signup-button" class="button">회원가입</button>
+      <button id="login-button" class="button">로그인</button>
+      <button
+        id="logout-button"
+        class="button auth-required"
+        style="display: none"
+      >
+        로그아웃
+      </button>
     </header>
 
     <main></main>
@@ -22,7 +32,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <spam class="new-window-form-title">새 창 만들기</spam>
-          <span id="new-window-close" class="close-button">&times;</span>
+          <span id="close-button" class="close-button">&times;</span>
         </div>
         <form id="new-window-form" class="new-window-form">
           <label for="window-title">이름</label>
@@ -49,14 +59,10 @@
             <option value="Asia/Seoul">Seoul (UTC+09:00)</option>
             <option value="Asia/Tokyo">Tokyo (UTC+09:00)</option>
             <option value="America/New_York">New York (UTC-05:00)</option>
-            <option value="America/Washington">
-              Washington DC (UTC-05:00)
-            </option>
             <option value="Europe/London">London (UTC+00:00)</option>
             <option value="Europe/Paris">Paris (UTC+01:00)</option>
             <option value="Europe/Berlin">Berlin (UTC+01:00)</option>
             <option value="Asia/Shanghai">Shanghai (UTC+08:00)</option>
-            <option value="Asia/Dubai">Dubai (UTC+04:00)</option>
             <option value="Australia/Sydney">Sydney (UTC+10:00)</option>
           </select>
           <button type="submit">생성</button>
@@ -64,11 +70,46 @@
       </div>
     </dialog>
 
+    <dialog id="signup-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <spam class="form-title">회원가입</spam>
+          <span id="close-signup-button" class="close-button">&times;</span>
+        </div>
+        <form id="signup-form" class="form">
+          <label for="signup-username">이름</label>
+          <input type="text" id="signup-username" name="username" required />
+          <label for="signup-password">비밀번호</label>
+          <input
+            type="password"
+            id="signup-password"
+            name="password"
+            required
+          />
+          <button type="submit">회원가입</button>
+        </form>
+      </div>
+    </dialog>
+
+    <dialog id="login-modal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <spam class="form-title">로그인</spam>
+          <span id="close-login-button" class="close-button">&times;</span>
+        </div>
+        <form id="login-form" class="form">
+          <label for="login-username">이름</label>
+          <input type="text" id="login-username" name="username" required />
+          <label for="login-password">비밀번호</label>
+          <input type="password" id="login-password" name="password" required />
+          <button type="submit">로그인</button>
+        </form>
+      </div>
+    </dialog>
+
     <footer class="taskbar">
       <ul class="taskbar-items">
         <li class="taskbar-item">시작</li>
-        <li class="taskbar-item">Task 1</li>
-        <li class="taskbar-item">Task 2</li>
       </ul>
 
       <div class="nav">
@@ -77,12 +118,12 @@
           <div id="new-window" class="nav-item">새로운 윈도우</div>
           <div class="nav-item">모두 최소화</div>
           <div class="nav-item">전체 열기</div>
-          <div class="nav-item">바둑판</div>
-          <div class="nav-item">정렬</div>
+          <div class="nav-item">바둑판 정렬</div>
+          <div class="nav-item">스택 정렬</div>
         </div>
       </div>
     </footer>
 
-    <script src="index.js"></script>
+    <script type="module" src="index.js"></script>
   </body>
 </html>
