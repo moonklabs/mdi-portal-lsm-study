@@ -2,7 +2,7 @@
 // readME 및 문서화 정리 -> 주말예정
 // id, pw 순서 DB -> 완료
 // sql lite -> 완료
-// postgre sql -> 진행중
+// postgre sql -> 완료
 
 // firebase auth
 

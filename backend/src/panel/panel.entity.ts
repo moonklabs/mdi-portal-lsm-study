@@ -10,7 +10,7 @@ import { User } from '../auth/user.entity';
 
 @Entity()
 export class Panel {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn('increment', { type: 'bigint' })
   id: number;
 
   @Column()
@@ -61,15 +61,15 @@ export class Panel {
   @ManyToOne(() => User, (user) => user.panels)
   user: User;
 
-  // @CreateDateColumn({ type: 'timestamp' })
-  // createdAt: Date;
-
-  // @UpdateDateColumn({ type: 'timestamp' })
-  // modifiedAt: Date;
-
-  @CreateDateColumn({ type: 'datetime' })
+  @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
-  @UpdateDateColumn({ type: 'datetime' })
+  @UpdateDateColumn({ type: 'timestamp' })
   modifiedAt: Date;
+
+  // @CreateDateColumn({ type: 'datetime' })
+  // createdAt: Date;
+
+  // @UpdateDateColumn({ type: 'datetime' })
+  // modifiedAt: Date;
 }

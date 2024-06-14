@@ -6,7 +6,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 export const AppDataSource = new DataSource({
-  type: 'mysql',
+  type: 'postgres',
   host: process.env.DATABASE_HOST,
   port: parseInt(process.env.DATABASE_PORT, 10),
   username: process.env.DATABASE_USERNAME,
@@ -14,9 +14,8 @@ export const AppDataSource = new DataSource({
   database: process.env.DATABASE_NAME,
   entities: [User, Panel],
   migrations: [__dirname + '/migrations/*{.ts,.js}'],
-  synchronize: false,
+  synchronize: true,
   logging: true,
-  debug: true,
 });
 
 AppDataSource.initialize()
