@@ -51,6 +51,10 @@ export class PanelService {
     for (const panelData of panelArray) {
       let panel: Panel | undefined = undefined;
 
+      panelData.action === 'browser'
+        ? (panelData.timezone = 'default')
+        : (panelData.content = '');
+
       if (panelData.id && !panelData.id.toString().startsWith('temp-')) {
         const panelId =
           typeof panelData.id === 'string'

@@ -3,6 +3,7 @@
 // id, pw 순서 DB -> 완료
 // sql lite -> 완료
 // postgre sql -> 완료
+// DB 쓰레기값 저장 문제 수정 -> 완료
 
 // firebase auth
 
@@ -59,6 +60,7 @@ class WindowManager {
       nav.addEventListener('click', (event) =>
         this.toggleNavMenu(event, navMenu, nav)
       );
+
       document.addEventListener('click', (event) =>
         this.closeNavMenu(event, navMenu, nav)
       );
