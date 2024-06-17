@@ -4,7 +4,7 @@
 
 ![시연영상](https://github.com/moonklabs/mdi-portal-lsm-study/assets/62977652/f1bb20b1-be9a-4a41-9d82-1c6e4b817071)
 
-## 기능 소개
+## About MDI-PORTAL
 
 이 프로젝트는 다음과 같은 기능을 제공합니다.
 
@@ -27,15 +27,13 @@
 - Mysql, SQLite, PostgreSQL 중 선택
 - npm
 
-### 설치 및 실행
-
-#### 1. 레포지토리 클론
+### 1. 레포지토리 클론
 
 ```bash
 git clone https://github.com/moonklabs/mdi-portal-lsm-study.git
 ```
 
-#### 2. 백엔드 설정
+### 2. 백엔드 설정
 
 `.env` 파일을 생성하고 DB 설정을 추가합니다. [DB 설정 가이드](docs/DB_guide.md)
 
@@ -51,11 +49,15 @@ git clone https://github.com/moonklabs/mdi-portal-lsm-study.git
 
 > 위 과정이 끝난다면 해당 명령어를 사용해 서버를 열어줍니다.
 
-#### 2. 프론트엔드 설정
+### 2. 프론트엔드 설정
 
 `Live Server`
 
-> 로컬 실행을 위해 VSCode에 익스텐션인 Live Server를 설치 후 우측 하단에 있는 Go Live 를 클릭합니다.
+> 로컬 실행을 위해 VSCode에 익스텐션인 Live Server를 설치합니다.
+
+`Go Live`
+
+> 프로젝트에 `index.html` 파일을 열고, 우측 하단의 "Go Live" 버튼을 클릭합니다.
 
 #### 사용방법
 
