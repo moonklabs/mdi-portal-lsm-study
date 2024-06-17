@@ -128,7 +128,6 @@ class WindowManager {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log('response', response);
       if (response.ok) {
         const panels = await response.json();
         panels
@@ -344,7 +343,6 @@ class WindowManager {
 
       if (response.ok) {
         const savedPanel = await response.json();
-        console.log('패널 생성 성공:', savedPanel);
         this.pendingChanges[savedPanel.id] = savedPanel;
       } else {
         console.error('패널 생성 실패:', response.statusText);
@@ -377,23 +375,18 @@ class WindowManager {
       if (panel.style.display === 'flex') {
         panel.style.display = 'none';
         this.pendingChanges[panelId].isHide = true;
-        console.log('hide', this.pendingChanges[panelId].isHide);
       } else {
         panel.style.display = 'flex';
         this.pendingChanges[panelId].isHide = false;
         this.bringToFront(panel, this.pendingChanges[panelId]);
-        console.log('show', this.pendingChanges[panelId].isHide);
       }
     }
   }
 
   minimizeAllPanels() {
-    console.log('minimizeAllPanels');
-    console.log(this.pendingChanges)
     Object.keys(this.pendingChanges).forEach((key) => {
-      console.log(key)
       const data = this.pendingChanges[key];
-      console.log(data)
+
       const panel = document.querySelector(`.window[data-id='${data.id}']`);
       if (panel) {
         panel.style.display = 'none';
@@ -447,6 +440,7 @@ class WindowManager {
         leftOffset += panelWidth;
       }
     });
+
     this.saveAllPanelPositions();
   }
 
@@ -465,7 +459,6 @@ class WindowManager {
     const startY = (mainHeight - panelHeight) / 3;
 
     panels.forEach((panel, index) => {
-      console.log(panel);
       panel.style.width = `${panelWidth}px`;
       panel.style.height = `${panelHeight}px`;
       panel.style.transform = `translate(${startX + index * stackOffset}px, ${
@@ -612,8 +605,6 @@ class WindowManager {
 
     let panelArray = Object.values(this.pendingChanges);
 
-    console.log('panelArray', panelArray);
-
     try {
       const response = await fetch('http://localhost:3000/api/panels/save', {
         method: 'POST',
@@ -625,13 +616,10 @@ class WindowManager {
       });
       if (response.ok) {
         const savePanels = await response.json();
-        console.log('패널 저장 성공:', savePanels);
+
         savePanels.forEach((panelData) => {
-          console.log('panelData', panelData);
           this.pendingChanges[panelData.id] = panelData;
-          console.log(this.pendingChanges);
         });
-        this.pendingChanges = {};
         alert('패널이 성공적으로 저장되었습니다.');
       } else {
         console.error('패널 저장 실패:', response.statusText);
@@ -774,8 +762,6 @@ class WindowManager {
       .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt))
       .forEach((panelData) => {
         if (panelData.isClose) return;
-
-        console.log('updateTaskList', panelData);
 
         const taskList = document.querySelector('.taskbar-items');
         const task = document.createElement('li');
