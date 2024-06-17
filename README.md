@@ -2,7 +2,7 @@
 
 이 프로젝트는 웹에서 개인화된 웹 환경을 제공하는 서비스입니다. 사용자는 웹 환경에서 시계, 브라우저 패널을 자신의 필요에 맞게 생성하고 조작할 수 있습니다. [API 명세](docs/API.md)
 
-![시연영상](https://github.com/moonklabs/mdi-portal-lsm-study/assets/62977652/95fc2455-e66e-4996-9978-34ad0ab92775)
+![시연영상](https://github.com/moonklabs/mdi-portal-lsm-study/assets/62977652/f1bb20b1-be9a-4a41-9d82-1c6e4b817071)
 
 ## 기능 소개
 
