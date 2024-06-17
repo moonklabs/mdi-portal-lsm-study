@@ -1,89 +1,68 @@
-# mdi-portal-lsm-study
+# MDI PORTAL
 
-MDI 포털 풀스택 구현 스터디 [API 명세](docs/API.md)
+이 프로젝트는 웹에서 개인화된 웹 환경을 제공하는 서비스입니다. 사용자는 웹 환경에서 시계, 브라우저 패널을 자신의 필요에 맞게 생성하고 조작할 수 있습니다. [API 명세](docs/API.md)
 
-## 참여
+![시연영상](https://github.com/moonklabs/mdi-portal-lsm-study/assets/62977652/95fc2455-e66e-4996-9978-34ad0ab92775)
 
-| 이름   | 역할   |
-| ------ | ------ |
-| 이수민 | 풀스택 |
+## 기능 소개
 
-<img src="sumin.jpg" alt="이수민" width="125" />
+이 프로젝트는 다음과 같은 기능을 제공합니다.
 
-## 1. 개발환경
+- **사용자 회원가입 및 로그인**: 회원가입과 로그인을 통해 개인화된 환경을 제공합니다.
+- **타임존 및 브라우저 패널**: 타임존을 설정한 시계 패널과 브라우저 패널을 생성할 수 있습니다.
+- **생성한 패널 관리**: 생성한 패널들을 Drag&Drop, 숨기기, 최대화와 같은 기능을 사용할 수 있습니다.
+- **메뉴 기능**: 하단에 있는 taskbar 우측에 있는 메뉴에서 모두 숨기기, 모두 열기, grid정렬, stack 정렬을 사용할 수 있습니다.
 
-- ### FE : Vanila JavaScript, HTML, CSS
-- ### BE : Node, Nest, MySQL
-- ### 버전 관리 : Github
-- ### 배포 환경 : AWS
+자세한 내용은 각 부분의 README 파일을 참고하세요
 
-## 2. 프로젝트 구조
+- [Backend](./backend/README.md)
+- [Frontend](./frontend/README.md)
 
+## 시작하기
+
+### 요구사항
+
+- Node.js
+- Nest.js
+- Mysql, SQLite, PostgreSQL 중 선택
+- npm
+
+### 설치 및 실행
+
+#### 1. 레포지토리 클론
+
+```bash
+git clone https://github.com/moonklabs/mdi-portal-lsm-study.git
 ```
-├── README.md
-├── LICENSE
-├── docs
-│    └── daily.md
-├── backend
-│    └── src
-│
-├── frontend
-│    └── src
-│         ├── index.html
-│         ├── index.js
-│         └── styles.css
 
-```
+#### 2. 백엔드 설정
 
-## 기능과 UI
+`.env` 파일을 생성하고 DB 설정을 추가합니다. [DB 설정 가이드](docs/DB_guide.md)
 
-- ### FE
+`cd backend`
 
-  - [x] 새로운 윈도우 생성
-  - [x] 윈도우 Drag & Drop
-  - [x] 윈도우 숨기기 및 최대화
-  - [x] 사용중인 윈도우를 정렬 기능
-  - [x] 모든 윈도우 열기 및 최소화
+> backend 폴더로 접근합니다.
 
-  [자세한 내용](docs/frontend.md)
+`npm install`
 
-- ### BE
+> backend 폴더로 접근 후 npm install을 실행합니다.
 
-  - [x] 회원가입, 로그인, 로그아웃
-  - [x] 로그인 상태에서 윈도우 저장 기능
-  - [x] 생성된 윈도우 API
-  - [x] 윈도우 생성 API
-  - [x] 윈도우 저장 API
+`npm run start`
 
-  [자세한 내용](docs/backend.md)
+> 위 과정이 끝난다면 해당 명령어를 사용해 서버를 열어줍니다.
 
-- ### UI
-  - [x] 회원가입 폼
-  - [x] 로그인 폼
-  - [x] 새로운 작업 생성 폼
-  - [x] 상단 header에 제목 표시
-  - [x] header 우측에 닉네임(로그인 상태) 표시
-  - [x] Taskbar 진행 작업 표시
-  - [x] Taskbar nav 활성화 버튼
+#### 2. 프론트엔드 설정
 
-## 개발 일정
+`Live Server`
 
-- ### 1주차
+> 로컬 실행을 위해 VSCode에 익스텐션인 Live Server를 설치 후 우측 하단에 있는 Go Live 를 클릭합니다.
 
-  - 레이아웃 및 UI 작업
+#### 사용방법
 
-[1주차 회고를 확인할 수 있습니다.](docs/1주차)
+1. 브라우저에서 http://localhost:3000으로 이동합니다.
+2. 회원가입 또는 로그인을 합니다.
+3. 메뉴에서 다양한 패널을 추가하고 관리합니다.
 
-- ### 2주차
+#
 
-  - 백엔드 API, DB 작업
-
-[2주차 회고를 확인할 수 있습니다.](docs/2주차)
-
-- ### 3주차
-
-  - AWS 배포 후 배포 환경 테스트
-
-- ### 4주차
-
-  - 기능 고도화
+저와 개발일지가 궁금하시다면 [About](docs/about.md), [개발일지](docs/개발일지/) 를 클릭해주세요
