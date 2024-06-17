@@ -259,11 +259,11 @@ class WindowManager {
     event.stopPropagation();
     navMenu.classList.toggle('nav-menu--visible');
     const menuRect = navMenu.getBoundingClientRect();
-    if (menuRect.right > window.innerWidth) {
-      navMenu.classList.add('right-aligned');
-    } else {
-      navMenu.classList.remove('right-aligned');
-    }
+    // if (menuRect.right > window.innerWidth) {
+    navMenu.classList.add('right-aligned');
+    // } else {
+    //   navMenu.classList.remove('right-aligned');
+    // }
   }
 
   closeNavMenu(event, navMenu, nav) {
@@ -388,8 +388,12 @@ class WindowManager {
   }
 
   minimizeAllPanels() {
+    console.log('minimizeAllPanels');
+    console.log(this.pendingChanges)
     Object.keys(this.pendingChanges).forEach((key) => {
+      console.log(key)
       const data = this.pendingChanges[key];
+      console.log(data)
       const panel = document.querySelector(`.window[data-id='${data.id}']`);
       if (panel) {
         panel.style.display = 'none';

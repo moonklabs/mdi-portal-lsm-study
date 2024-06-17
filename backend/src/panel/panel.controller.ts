@@ -9,7 +9,6 @@ import {
 import { PanelService } from './panel.service';
 import { Panel } from './panel.entity';
 import { User } from '../auth/user.entity';
-import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { CreatePanelDto } from './dto/create-panel.dto';
 import { UpdatePanelDto } from './dto/update-panel.dto';
 import {
@@ -18,6 +17,7 @@ import {
   ApiTags,
   ApiBearerAuth,
 } from '@nestjs/swagger';
+import { JwtAuthGuard } from '../auth/auth.guard';
 
 @ApiTags('panels')
 @ApiBearerAuth()

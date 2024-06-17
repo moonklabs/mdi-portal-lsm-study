@@ -51,6 +51,11 @@ export class PanelService {
     for (const panelData of panelArray) {
       let panel: Panel | undefined = undefined;
 
+      if (panelData.width) panelData.width = Math.floor(panelData.width);
+      if (panelData.height) panelData.height = Math.floor(panelData.height);
+      if (panelData.x) panelData.x = Math.floor(panelData.x);
+      if (panelData.y) panelData.y = Math.floor(panelData.y);
+
       panelData.action === 'browser'
         ? (panelData.timezone = 'default')
         : (panelData.content = '');
