@@ -59,7 +59,7 @@ git clone https://github.com/moonklabs/mdi-portal-lsm-study.git
 
 #### 사용방법
 
-1. 브라우저에서 http://localhost:3000으로 이동합니다.
+1. Live Server를 사용해 브라우저를 열어줍니다.
 2. 회원가입 또는 로그인을 합니다.
 3. 메뉴에서 다양한 패널을 추가하고 관리합니다.
 
