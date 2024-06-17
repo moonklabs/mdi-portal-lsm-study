@@ -503,6 +503,8 @@ class WindowManager {
     container.dataset.id = windowData.id;
     container.classList.add('window');
 
+    console.log(windowData);
+
     container.innerHTML = `
     <div class='window-header'>
         <div class='window-header-bar'>
@@ -519,7 +521,11 @@ class WindowManager {
           windowData.action === 'browser'
             ? `<iframe src="${windowData.content}" frameborder="0"></iframe>`
             : windowData.action === 'clock'
-            ? `<div class="clock" data-timezone="${windowData.timezone}"></div>`
+            ? `<div class="clock-container">
+                <div class="location" >${windowData.timezone}</div>
+                <div class="clock" data-timezone="${windowData.timezone}"></div>
+              </div>
+            `
             : ''
         }
       </div>

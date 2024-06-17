@@ -243,7 +243,6 @@ dialog::backdrop {
 }
 
 .window-content {
-  display: flex;
   flex-grow: 1;
 }
 
@@ -314,4 +313,33 @@ dialog::backdrop {
 
 .form button:hover {
   background-color: #0056b3;
+}
+
+.clock-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: #ecf0f1;
+  gap: 1rem;
+}
+
+.location {
+  font-size: 1.6rem;
+  color: #2c3e50;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  box-shadow: 0 0 0.4rem rgba(0, 0, 0, 0.1);
+}
+
+.clock {
+  color: #2c3e50;
+  font-size: 2.4rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  box-shadow: 0 0 0.4rem rgba(0, 0, 0, 0.2);
 }
