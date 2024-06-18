@@ -1,6 +1,6 @@
 # MDI PORTAL
 
-이 프로젝트는 Vanila JavaScript, NestJS를 활용한 풀스택 프로젝트입니다. 개인화된 웹 환경을 사용하고 싶으시다면 하단 시작하기를 참고해 로컬에서 간편하게 사용하실 수 있습니다.[API 명세](docs/API.md)
+이 프로젝트는 Vanilla JavaScript, NestJS를 활용한 풀스택 프로젝트입니다. 개인화된 웹 환경을 사용하고 싶으시다면 하단 시작하기를 참고해 로컬에서 간편하게 사용하실 수 있습니다.[API 명세](docs/API.md)
 
 ![시연영상](https://github.com/moonklabs/mdi-portal-lsm-study/assets/62977652/77ab2ba6-d743-4ff5-aafc-4b6bfce51b97)
 
