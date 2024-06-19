@@ -16,6 +16,13 @@ export const panelSlice = createSlice({
         state[index] = action.payload;
       }
     },
+    bringToFront: (state, action) => {
+      const index = state.findIndex((panel) => panel.id === action.payload);
+      if (index !== -1) {
+        const [panel] = state.splice(index, 1);
+        state.push(panel);
+      }
+    },
     arrangePanelsGrid: (state) => {
       const numPanels = state.length;
       const numCols = Math.ceil(Math.sqrt(numPanels));
@@ -23,7 +30,7 @@ export const panelSlice = createSlice({
       const panelWidth = window.innerWidth / numCols;
       const panelHeight = window.innerHeight / numRows;
 
-      console.log(numPanels, numCols, numRows, panelWidth, panelHeight)
+      console.log(numPanels, numCols, numRows, panelWidth, panelHeight);
 
       let leftOffset = 0;
       let topOffset = 0;
@@ -75,6 +82,7 @@ export const panelSlice = createSlice({
 export const {
   addPanel,
   updatePanel,
+  bringToFront,
   arrangePanelsGrid,
   arrangePanelsStack,
   hideAllPanels,

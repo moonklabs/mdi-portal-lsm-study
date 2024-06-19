@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import Draggable from 'react-draggable';
 import { Paper, Box } from '@mui/material';
-import { updatePanel } from '../../features/panels/panelSlice';
+import { bringToFront, updatePanel } from '../../features/panels/panelSlice';
 import PanelHeader from './PanelHeader';
 import useClock from '../../hooks/useClock';
 import PanelContent from './PanelContent';
@@ -42,6 +42,10 @@ function Panel({ panel }) {
     dispatch(updatePanel({ ...panel, x: data.x, y: data.y }));
   };
 
+  const handleClick = () => {
+    dispatch(bringToFront(panel.id));
+  };
+
   return (
     <Draggable
       nodeRef={panelRef}
@@ -49,6 +53,7 @@ function Panel({ panel }) {
       position={{ x: panel.x, y: panel.y }}
       onStart={handleDragStart}
       onStop={handleDragStop}
+      onMouseDown={handleClick}
     >
       <Box
         ref={panelRef}

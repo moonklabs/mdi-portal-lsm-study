@@ -5,7 +5,6 @@ import HeaderComponent from './compnents/Header';
 import Window from './compnents/Window';
 import TaskList from './compnents/TaskList';
 import { Box } from '@mui/material';
-// import Panel from './compnents/Panel';
 
 const theme = createTheme();
 
