@@ -1,5 +1,6 @@
 // src/components/TaskList.js
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   List,
   ListItem,
@@ -11,14 +12,31 @@ import {
   MenuItem,
   ButtonGroup,
 } from '@mui/material';
+import {
+  arrangePanelsGrid,
+  arrangePanelsStack,
+  hideAllPanels,
+  showAllPanels,
+  updatePanel,
+} from '../features/panels/panelSlice';
+import NewWindowForm from './modal/NewWindowForm';
 
 function TaskList() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [newWindowOpen, setNewWindowOpen] = useState(false);
+  const dispatch = useDispatch();
+  const tasks = useSelector((state) => state.panel);
+
+  const taskList = tasks.filter((task) => task.isClose === false);
+
   const handleMenuClick = (e) => {
     setAnchorEl(e.currentTarget);
   };
 
+  const handleTaskClick = (task) => {
+    dispatch(updatePanel({ ...task, isHide: !task.isHide }));
+    console.log(task)
+  };
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -50,6 +68,18 @@ function TaskList() {
           height: '100%',
         }}
       >
+        <List sx={{ display: 'flex' }}>
+          <ListItem sx={{ width: 'auto' }}>
+            <ListItemText primary="시작" />
+          </ListItem>
+          {taskList.map((task) => (
+            <ButtonGroup key={task.id} sx={{ width: 'auto' }}>
+              <Button onClick={() => handleTaskClick(task)}>
+                {task.title}
+              </Button>
+            </ButtonGroup>
+          ))}
+        </List>
         <Button variant="contained" color="primary" onClick={handleMenuClick}>
           메뉴
         </Button>

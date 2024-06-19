@@ -1,8 +1,18 @@
 // src/components/Window.js
 import React from 'react';
 import { Container, Box } from '@mui/material';
+import { useSelector } from 'react-redux';
+import Panel from './panel/Panel';
 
 function Window() {
+  const panels = useSelector((state) => state.panel);
+
+  const panelList = panels.filter(
+    (task) => task.isClose === false && task.isHide === false
+  );
+
+  console.log(panelList);
+
   return (
     <Container
       component="main"
@@ -26,6 +36,8 @@ function Window() {
           flexWrap: 'wrap',
         }}
       >
+        {panelList &&
+          panelList.map((panel) => <Panel key={panel.id} panel={panel} />)}
       </Box>
     </Container>
   );
