@@ -1,23 +1,28 @@
 // src/App.js
 import React from 'react';
-import { Button, Container, Typography } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Counter } from './features/counter/counter';
+import HeaderComponent from './compnents/Header';
+import Window from './compnents/Window';
+import TaskList from './compnents/TaskList';
+import { Box } from '@mui/material';
+// import Panel from './compnents/Panel';
 
 const theme = createTheme();
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Container>
-        <Typography variant="h1" component="h2" gutterBottom>
-          Welcome to MUI
-        </Typography>
-        <Button variant="contained" color="primary">
-          Hello MUI
-        </Button>
-        <Counter variant="contained" />
-      </Container>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100vh',
+        }}
+      >
+        <HeaderComponent />
+        <Window></Window>
+        <TaskList />
+      </Box>
     </ThemeProvider>
   );
 }
