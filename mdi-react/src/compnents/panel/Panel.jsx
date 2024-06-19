@@ -11,11 +11,8 @@ function Panel({ panel }) {
   const dispatch = useDispatch();
   const panelRef = useRef(null);
   const currentTime = useClock(panel.timezone);
-  const [isMaximized, setIsMaximized] = useState(panel.isMaximized);
 
   const handleMaximize = () => {
-    // const maximize = !isMaximized;
-    // setIsMaximized(maximize);
     dispatch(
       updatePanel({
         ...panel,
@@ -33,17 +30,12 @@ function Panel({ panel }) {
   };
 
   const handleDragStart = () => {
-    if (isMaximized) {
-      setIsMaximized(false);
-      dispatch(
-        updatePanel({
-          ...panel,
-          isMaximized: false,
-          width: panel.originalWidth || 400,
-          height: panel.originalHeight || 300,
-        })
-      );
-    }
+    dispatch(
+      updatePanel({
+        ...panel,
+        isMaximized: false,
+      })
+    );
   };
 
   const handleDragStop = (e, data) => {
@@ -79,7 +71,7 @@ function Panel({ panel }) {
         >
           <PanelHeader
             title={panel.title}
-            isMaximized={isMaximized}
+            isMaximized={panel.isMaximized}
             handleMaximize={handleMaximize}
             handleClose={handleClose}
           />
