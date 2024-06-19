@@ -11,19 +11,19 @@ function Panel({ panel }) {
   const dispatch = useDispatch();
   const panelRef = useRef(null);
   const currentTime = useClock(panel.timezone);
-  const [transform, setTransform] = useState({ x: panel.x, y: panel.y });
+  const [isMaximized, setIsMaximized] = useState(panel.isMaximized);
 
   const handleMaximize = () => {
-    const isMaximized = !panel.isMaximized;
-    setTransform({ x: 0, y: 0 });
+    // const maximize = !isMaximized;
+    // setIsMaximized(maximize);
     dispatch(
       updatePanel({
         ...panel,
-        isMaximized,
+        isMaximized: !panel.isMaximized,
         x: 0,
         y: 0,
-        width: isMaximized ? window.innerWidth : panel.width,
-        height: isMaximized ? window.innerHeight : panel.height,
+        width: window.innerWidth,
+        height: window.innerHeight,
       })
     );
   };
@@ -32,26 +32,39 @@ function Panel({ panel }) {
     dispatch(updatePanel({ ...panel, isClose: true }));
   };
 
+  const handleDragStart = () => {
+    if (isMaximized) {
+      setIsMaximized(false);
+      dispatch(
+        updatePanel({
+          ...panel,
+          isMaximized: false,
+          width: panel.originalWidth || 400,
+          height: panel.originalHeight || 300,
+        })
+      );
+    }
+  };
+
+  const handleDragStop = (e, data) => {
+    dispatch(updatePanel({ ...panel, x: data.x, y: data.y }));
+  };
+
   return (
     <Draggable
       nodeRef={panelRef}
       handle=".panel-header"
-      position={transform}
-      onStop={(e, data) => {
-        if (!panel.isMaximized) {
-          setTransform({ x: data.x, y: data.y });
-          dispatch(updatePanel({ ...panel, x: data.x, y: data.y }));
-        }
-      }}
+      position={{ x: panel.x, y: panel.y }}
+      onStart={handleDragStart}
+      onStop={handleDragStop}
     >
       <Box
         ref={panelRef}
         sx={{
           position: 'absolute',
           zIndex: 1000,
-          transform: `translate(${transform.x}px, ${transform.y}px)`,
-          width: panel.isMaximized ? '100%' : panel.width,
-          height: panel.isMaximized ? '100%' : panel.height,
+          width: panel.width,
+          height: panel.height,
         }}
       >
         <Paper
@@ -66,7 +79,7 @@ function Panel({ panel }) {
         >
           <PanelHeader
             title={panel.title}
-            isMaximized={panel.isMaximized}
+            isMaximized={isMaximized}
             handleMaximize={handleMaximize}
             handleClose={handleClose}
           />
