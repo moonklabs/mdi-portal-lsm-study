@@ -7,27 +7,10 @@ import PanelHeader from './PanelHeader';
 import useClock from '../../hooks/useClock';
 import PanelContent from './PanelContent';
 
-function Panel({ panel }) {
+const Panel = ({ panel }) => {
   const dispatch = useDispatch();
   const panelRef = useRef(null);
   const currentTime = useClock(panel.timezone);
-
-  const handleMaximize = () => {
-    dispatch(
-      updatePanel({
-        ...panel,
-        isMaximized: !panel.isMaximized,
-        x: 0,
-        y: 0,
-        width: window.innerWidth,
-        height: window.innerHeight,
-      })
-    );
-  };
-
-  const handleClose = () => {
-    dispatch(updatePanel({ ...panel, isClose: true }));
-  };
 
   const handleDragStart = () => {
     dispatch(
@@ -74,17 +57,12 @@ function Panel({ panel }) {
             flexDirection: 'column',
           }}
         >
-          <PanelHeader
-            title={panel.title}
-            isMaximized={panel.isMaximized}
-            handleMaximize={handleMaximize}
-            handleClose={handleClose}
-          />
+          <PanelHeader panel={panel} />
           <PanelContent {...panel} currentTime={currentTime} />
         </Paper>
       </Box>
     </Draggable>
   );
-}
+};
 
 export default Panel;
