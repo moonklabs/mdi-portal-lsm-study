@@ -27,7 +27,9 @@ function TaskList() {
   const dispatch = useDispatch();
   const tasks = useSelector((state) => state.panel);
 
-  const taskList = tasks.filter((task) => task.isClose === false);
+  const taskList = tasks
+    .filter((task) => !task.isClose)
+    .sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
 
   const handleMenuClick = (e) => {
     setAnchorEl(e.currentTarget);
@@ -35,7 +37,7 @@ function TaskList() {
 
   const handleTaskClick = (task) => {
     dispatch(updatePanel({ ...task, isHide: !task.isHide }));
-    console.log(task)
+    console.log(task);
   };
 
   const handleClose = () => {

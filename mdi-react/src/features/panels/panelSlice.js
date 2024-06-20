@@ -30,6 +30,7 @@ export const fetchPanels = createAsyncThunk(
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
+      response.data.sort((a, b) => a.order - b.order);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
@@ -56,6 +57,13 @@ export const panelSlice = createSlice({
       if (index !== -1) {
         const [panel] = state.splice(index, 1);
         state.push(panel);
+
+        console.log(panel);
+
+        state.forEach((panel, index) => {
+          console.log(panel.order);
+          panel.order = index;
+        });
       }
     },
     arrangePanelsGrid: (state) => {
@@ -88,15 +96,15 @@ export const panelSlice = createSlice({
       });
     },
     arrangePanelsStack: (state) => {
-      const stackOffset = 30;
+      const stackOffset = 20;
       const mainWidth = window.innerWidth;
       const mainHeight = window.innerHeight;
 
       const panelWidth = mainWidth * 0.5;
       const panelHeight = mainHeight * 0.5;
 
-      const startX = (mainWidth - panelWidth) / 2;
-      const startY = (mainHeight - panelHeight) / 3;
+      const startX = (mainWidth - panelWidth) / 4;
+      const startY = (mainHeight - panelHeight) / 4;
 
       state.forEach((panel, index) => {
         panel.width = panelWidth;
