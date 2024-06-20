@@ -35,6 +35,7 @@ function HeaderComponent() {
 
   const handleLogout = () => {
     dispatch(logout());
+    window.location.reload();
   };
 
   const handleSave = () => {

@@ -29,7 +29,7 @@ function App() {
         }}
       >
         <HeaderComponent />
-        <Window></Window>
+        <Window />
         <TaskList />
       </Box>
     </ThemeProvider>

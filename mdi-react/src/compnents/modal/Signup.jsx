@@ -17,8 +17,11 @@ const Signup = ({ onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(signUp(formData));
-    onClose();
+    dispatch(signUp(formData)).then((result) => {
+      if (signUp.fulfilled.match(result)) {
+        onClose();
+      }
+    });
   };
 
   return (

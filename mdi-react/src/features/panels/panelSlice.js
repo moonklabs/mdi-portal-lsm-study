@@ -58,8 +58,6 @@ export const panelSlice = createSlice({
         const [panel] = state.splice(index, 1);
         state.push(panel);
 
-        console.log(panel);
-
         state.forEach((panel, index) => {
           console.log(panel.order);
           panel.order = index;

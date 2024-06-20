@@ -17,8 +17,12 @@ const LoginModal = ({ onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(signIn(formData));
-    onClose();
+    dispatch(signIn(formData)).then((result) => {
+      if (signIn.fulfilled.match(result)) {
+        window.location.reload();
+        onClose();
+      }
+    });
   };
 
   return (
