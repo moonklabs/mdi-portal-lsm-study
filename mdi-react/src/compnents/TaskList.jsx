@@ -11,6 +11,7 @@ import {
   Popover,
   MenuItem,
   ButtonGroup,
+  styled,
 } from '@mui/material';
 import {
   arrangePanelsGrid,
@@ -70,21 +71,37 @@ function TaskList() {
           height: '100%',
         }}
       >
-        <List sx={{ display: 'flex' }}>
-          <ListItem sx={{ width: 'auto' }}>
-            <ListItemText primary="시작" />
+        <List sx={{ display: 'flex', padding: '0' }}>
+          <ListItem
+            sx={{
+              width: 'auto',
+              borderRight: '1px solid #E1E1E1',
+            }}
+          >
+            <ListItemText
+              primary="시작"
+              primaryTypographyProps={{
+                sx: { color: '#515151', fontWeight: '700' },
+              }}
+            />
           </ListItem>
           {taskList.map((task) => (
             <ButtonGroup key={task.id} sx={{ width: 'auto' }}>
-              <Button onClick={() => handleTaskClick(task)}>
+              <TaskMenuButton onClick={() => handleTaskClick(task)}>
                 {task.title}
-              </Button>
+              </TaskMenuButton>
             </ButtonGroup>
           ))}
         </List>
-        <Button variant="contained" color="primary" onClick={handleMenuClick}>
+        <TaskMenuButton
+          onClick={handleMenuClick}
+          sx={{
+            borderRight: 'none',
+            borderLeft: '1px solid #E1E1E1',
+          }}
+        >
           메뉴
-        </Button>
+        </TaskMenuButton>
         <Popover
           id={id}
           open={open}
@@ -143,3 +160,10 @@ function TaskList() {
 }
 
 export default TaskList;
+
+const TaskMenuButton = styled(Button)({
+  borderRadius: 0,
+  border: 'none',
+  borderRight: '1px solid #E1E1E1',
+  color: '#3A3A3A',
+});
