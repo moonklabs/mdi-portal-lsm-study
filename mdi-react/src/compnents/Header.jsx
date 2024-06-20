@@ -30,8 +30,6 @@ function HeaderComponent() {
   const isLoggedIn = !!token;
   const panels = useSelector((state) => state.panel);
 
-  console.log(isLoggedIn);
-
   const [loginOpen, setLoginOpen] = useState(false);
   const [signupOpen, setSignupOpen] = useState(false);
 
@@ -80,12 +78,12 @@ function HeaderComponent() {
       </Toolbar>
       <Modal open={loginOpen} onClose={handleLoginClose}>
         <Box sx={modalStyle}>
-          <LoginModal />
+          <LoginModal onClose={handleLoginClose} />
         </Box>
       </Modal>
       <Modal open={signupOpen} onClose={handleSignupClose}>
         <Box sx={modalStyle}>
-          <Signup />
+          <Signup onClose={handleSignupClose} />
         </Box>
       </Modal>
     </AppBar>

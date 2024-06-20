@@ -11,8 +11,6 @@ function Window() {
     (task) => task.isClose === false && task.isHide === false
   );
 
-  console.log(panelList);
-
   return (
     <Container
       component="main"

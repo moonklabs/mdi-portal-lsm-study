@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, Box, Typography, Alert } from '@mui/material';
 import { signUp } from '../../features/auth/authSlice';
 
-const Signup = () => {
+const Signup = ({ onClose }) => {
   const [formData, setFormData] = useState({ username: '', password: '' });
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.auth);
@@ -18,6 +18,7 @@ const Signup = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(signUp(formData));
+    onClose();
   };
 
   return (

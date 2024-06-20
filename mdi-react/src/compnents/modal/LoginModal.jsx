@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TextField, Button, Box, Typography, Alert } from '@mui/material';
 import { signIn } from '../../features/auth/authSlice';
 
-const LoginModal = () => {
+const LoginModal = ({ onClose }) => {
   const [formData, setFormData] = useState({ username: '', password: '' });
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.auth);
@@ -18,6 +18,7 @@ const LoginModal = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(signIn(formData));
+    onClose();
   };
 
   return (
