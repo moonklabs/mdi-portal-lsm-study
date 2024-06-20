@@ -95,7 +95,7 @@ const NewWindowForm = ({ open, onClose }) => {
               },
             }}
           >
-            <img src="logo/ic_close.png" alt="close" />
+            <img src="logo/ic_close.svg" alt="close" />
           </Button>
         </Box>
         <DialogContent

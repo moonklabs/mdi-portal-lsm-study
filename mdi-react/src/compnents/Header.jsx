@@ -57,10 +57,11 @@ function HeaderComponent() {
           justifyContent: 'space-between',
           alignItems: 'center',
           pr: 0,
+          height: '100%',
         }}
       >
         <Box sx={{ flexGrow: 1 }}>
-          <img src="/logo/mdi-portal-logo.png" alt="mdi-portal-logo" />
+          <img src="/logo/logo.svg" alt="mdi-portal-logo" />
         </Box>
         {isLoggedIn ? (
           <HeaderContentBox>
@@ -73,20 +74,19 @@ function HeaderComponent() {
             <Button color="inherit" onClick={handleLogout}>
               로그아웃
             </Button>
-            <Box>
-              <SaveBox color="inherit" onClick={handleSave}>
-                <Box>
-                  <img
-                    src="/logo/ic_save.png"
-                    alt="save"
-                    style={{
-                      width: '1.6rem',
-                      height: 'auto',
-                    }}
-                  />
-                </Box>
-              </SaveBox>
-            </Box>
+
+            <SaveBox color="inherit" onClick={handleSave}>
+              <Box>
+                <img
+                  src="/logo/ic_save.svg"
+                  alt="save"
+                  style={{
+                    width: '2rem',
+                    height: '2rem',
+                  }}
+                />
+              </Box>
+            </SaveBox>
           </HeaderContentBox>
         ) : (
           <HeaderContentBox>
@@ -140,7 +140,8 @@ const SaveBox = styled(Box)({
   alignItems: 'center',
   justifyContent: 'center',
   backgroundColor: '#111',
-  padding: '0.6rem 0.8rem',
+  height: '100%',
+  padding: '0 0.6rem',
 });
 
 const HeaderContentBox = styled(Box)({
@@ -148,6 +149,7 @@ const HeaderContentBox = styled(Box)({
   justifyContent: 'center',
   alignItems: 'center',
   gap: '1rem',
+  height: '100%',
 });
 
 const CenterBar = styled(Box)({
