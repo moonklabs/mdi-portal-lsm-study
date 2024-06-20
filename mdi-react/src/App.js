@@ -19,6 +19,12 @@ function App() {
     }
   }, [dispatch, isLoggedIn]);
 
+  const theme = createTheme({
+    typography: {
+      fontFamily: 'Pretendard, Arial, sans-serif',
+    },
+  });
+
   return (
     <ThemeProvider theme={theme}>
       <Box
