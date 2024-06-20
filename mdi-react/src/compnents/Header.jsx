@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
@@ -10,6 +9,7 @@ import { logout } from '../features/auth/authSlice';
 import LoginModal from './modal/LoginModal';
 import Signup from './modal/Signup';
 import { savePanels } from '../features/panels/panelSlice';
+import { styled } from '@mui/material';
 
 const modalStyle = {
   position: 'absolute',
@@ -49,34 +49,65 @@ function HeaderComponent() {
   const handleSignupClose = () => setSignupOpen(false);
 
   return (
-    <AppBar position="static" component="header">
-      <Toolbar component="section">
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          My Application
-        </Typography>
+    <Header position="static" component="header">
+      <Box
+        component="section"
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          pr: 0,
+        }}
+      >
+        <Box sx={{ flexGrow: 1 }}>
+          <img src="/logo/mdi-portal-logo.png" alt="mdi-portal-logo" />
+        </Box>
         {isLoggedIn ? (
-          <div>
-            <Typography variant="body1" component="span" sx={{ mr: 2 }}>
+          <HeaderContentBox>
+            <Typography variant="body1" component="span">
               {username}님 반갑습니다
             </Typography>
+
+            <CenterBar />
+
             <Button color="inherit" onClick={handleLogout}>
-              Logout
+              로그아웃
             </Button>
-            <Button color="inherit" onClick={handleSave}>
-              Save
-            </Button>
-          </div>
+            <Box>
+              <SaveBox color="inherit" onClick={handleSave}>
+                <Box>
+                  <img
+                    src="/logo/ic_save.png"
+                    alt="save"
+                    style={{
+                      width: '1.6rem',
+                      height: 'auto',
+                    }}
+                  />
+                </Box>
+              </SaveBox>
+            </Box>
+          </HeaderContentBox>
         ) : (
-          <div>
+          <HeaderContentBox>
             <Button color="inherit" onClick={handleLoginOpen}>
-              Login
+              로그인
             </Button>
-            <Button color="inherit" onClick={handleSignupOpen}>
-              Sign Up
+
+            <CenterBar />
+
+            <Button
+              color="inherit"
+              onClick={handleSignupOpen}
+              sx={{
+                padding: '0 1rem',
+              }}
+            >
+              회원가입
             </Button>
-          </div>
+          </HeaderContentBox>
         )}
-      </Toolbar>
+      </Box>
       <Modal open={loginOpen} onClose={handleLoginClose}>
         <Box sx={modalStyle}>
           <LoginModal onClose={handleLoginClose} />
@@ -87,8 +118,40 @@ function HeaderComponent() {
           <Signup onClose={handleSignupClose} />
         </Box>
       </Modal>
-    </AppBar>
+    </Header>
   );
 }
 
 export default HeaderComponent;
+
+const Header = styled(AppBar)({
+  background: 'linear-gradient(315deg, #3A3A3A 95%, #A8A8A8 104%)',
+  color: '#fff',
+  height: '3.5rem',
+  overflow: 'hidden',
+  display: 'flex',
+  justifyContent: 'center',
+  padding: '0 0 0 1rem',
+});
+
+const SaveBox = styled(Box)({
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  backgroundColor: '#111',
+  padding: '0.6rem 0.8rem',
+});
+
+const HeaderContentBox = styled(Box)({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: '1rem',
+});
+
+const CenterBar = styled(Box)({
+  height: '1.5rem',
+  width: '1px',
+  backgroundColor: '#777777',
+});
