@@ -11,10 +11,13 @@ const theme = createTheme();
 
 function App() {
   const dispatch = useDispatch();
+  const isLoggedIn = localStorage.getItem('token');
 
   useEffect(() => {
-    dispatch(fetchPanels());
-  }, [dispatch]);
+    if (isLoggedIn) {
+      dispatch(fetchPanels());
+    }
+  }, [dispatch, isLoggedIn]);
 
   return (
     <ThemeProvider theme={theme}>
