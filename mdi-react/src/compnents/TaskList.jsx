@@ -61,7 +61,8 @@ function TaskList() {
         width: '100%',
         height: '3.4rem',
         bgcolor: 'background.paper',
-        boxShadow: 3,
+        boxShadow: 2,
+        borderTop: '1px solid #DBDBDB',
       }}
     >
       <Paper
@@ -81,7 +82,7 @@ function TaskList() {
             <ListItemText
               primary="시작"
               primaryTypographyProps={{
-                sx: { color: '#515151', fontWeight: '700' },
+                sx: { color: '3A3A3A', fontWeight: '700' },
               }}
             />
           </ListItem>
@@ -96,8 +97,18 @@ function TaskList() {
         <TaskMenuButton
           onClick={handleMenuClick}
           sx={{
-            borderRight: 'none',
+            fontSize: '1rem',
+            fontWeight: '700',
+            borderRadius: 0,
+            border: 'none',
             borderLeft: '1px solid #E1E1E1',
+            color: '#3A3A3A',
+
+            '&:hover': {
+              backgroundColor: '#F1F1F1',
+              border: 'none',
+              borderLeft: '1px solid #E1E1E1',
+            },
           }}
         >
           메뉴
@@ -108,12 +119,36 @@ function TaskList() {
           anchorEl={anchorEl}
           onClose={handleClose}
           anchorOrigin={{
-            vertical: 'top',
+            vertical: 'top,',
             horizontal: 'right',
           }}
           transformOrigin={{
             vertical: 'bottom',
             horizontal: 'right',
+          }}
+          sx={{
+            '& .MuiPopover-paper': {
+              right: '-1.2rem',
+              bottom: '3.4rem',
+              boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
+              borderRadius: '8px 0 0 0',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'start',
+            },
+            '& .MuiMenuItem-root': {
+              width: '100%',
+              borderBottom: '1px solid #E1E1E1',
+              padding: '0.6rem',
+              '&:hover': {
+                backgroundColor: '#F1F4FD',
+              },
+            },
+            '& .MuiMenuItem-root:last-child': {
+              width: '100%',
+              borderBottom: 'none',
+            },
           }}
         >
           <MenuItem onClick={handleAddPanel}>새창만들기</MenuItem>
@@ -166,4 +201,10 @@ const TaskMenuButton = styled(Button)({
   border: 'none',
   borderRight: '1px solid #E1E1E1',
   color: '#3A3A3A',
+
+  '&:hover': {
+    backgroundColor: '#F1F4FD',
+    border: 'none',
+    borderRight: '1px solid #E1E1E1',
+  },
 });
