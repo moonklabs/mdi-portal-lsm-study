@@ -23,6 +23,7 @@ function Window() {
         display: 'flex',
         flexDirection: 'column',
         padding: 0,
+        backgroundColor: '#e1e1e1',
       }}
     >
       <Box

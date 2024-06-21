@@ -7,8 +7,6 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchPanels } from './features/panels/panelSlice';
 
-const theme = createTheme();
-
 function App() {
   const dispatch = useDispatch();
   const isLoggedIn = localStorage.getItem('token');
