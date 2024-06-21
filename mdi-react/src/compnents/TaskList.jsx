@@ -59,9 +59,8 @@ function TaskList() {
         position: 'relative',
         bottom: 0,
         width: '100%',
-        height: '3.4rem',
+        height: '4.1rem',
         bgcolor: 'background.paper',
-        boxShadow: 2,
         borderTop: '1px solid #DBDBDB',
       }}
     >
@@ -75,14 +74,20 @@ function TaskList() {
         <List sx={{ display: 'flex', padding: '0' }}>
           <ListItem
             sx={{
-              width: 'auto',
+              width: '5.5rem',
               borderRight: '1px solid #E1E1E1',
+              padding: '0',
             }}
           >
             <ListItemText
               primary="시작"
               primaryTypographyProps={{
-                sx: { color: '3A3A3A', fontWeight: '700' },
+                sx: {
+                  color: '3A3A3A',
+                  fontWeight: '700',
+                  fontSize: '1.4rem',
+                  textAlign: 'center',
+                },
               }}
             />
           </ListItem>
@@ -97,16 +102,18 @@ function TaskList() {
         <TaskMenuButton
           onClick={handleMenuClick}
           sx={{
-            fontSize: '1rem',
+            fontSize: '1.4rem',
             fontWeight: '700',
-            borderRadius: 0,
             border: 'none',
-            borderLeft: '1px solid #E1E1E1',
             color: '#3A3A3A',
+            borderLeft: '1px solid #E1E1E1',
+            width: '5.5rem',
+            minWidth: 'auto',
+            minHeight: 'auto',
 
             '&:hover': {
-              backgroundColor: '#F1F1F1',
               border: 'none',
+              backgroundColor: '#F1F4FD',
               borderLeft: '1px solid #E1E1E1',
             },
           }}
@@ -118,29 +125,26 @@ function TaskList() {
           open={open}
           anchorEl={anchorEl}
           onClose={handleClose}
+          component="section"
           anchorOrigin={{
             vertical: 'top',
-            horizontal: 'right',
+            horizontal: 'left',
           }}
           transformOrigin={{
             vertical: 'bottom',
-            horizontal: 'right',
+            horizontal: 'left',
           }}
           sx={{
             '& .MuiPopover-paper': {
-              right: '-1.2rem',
-              bottom: '3.4rem',
               boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)',
               borderRadius: '8px 0 0 0',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'start',
+              width: '16rem',
+              height: '20rem',
+              marginLeft: '1.6rem',
             },
             '& .MuiMenuItem-root': {
               width: '100%',
               borderBottom: '1px solid #E1E1E1',
-              padding: '0.6rem',
               '&:hover': {
                 backgroundColor: '#F1F4FD',
               },
@@ -151,39 +155,39 @@ function TaskList() {
             },
           }}
         >
-          <MenuItem onClick={handleAddPanel}>새창만들기</MenuItem>
-          <MenuItem
-            onClick={() => {
-              dispatch(arrangePanelsGrid());
-              handleClose();
-            }}
-          >
-            Grid 정렬
-          </MenuItem>
-          <MenuItem
-            onClick={() => {
-              dispatch(arrangePanelsStack());
-              handleClose();
-            }}
-          >
-            Stack 정렬
-          </MenuItem>
-          <MenuItem
+          <PopoverMunu onClick={handleAddPanel}>새로운 윈도우</PopoverMunu>
+          <PopoverMunu
             onClick={() => {
               dispatch(hideAllPanels());
               handleClose();
             }}
           >
-            전체 숨기기
-          </MenuItem>
-          <MenuItem
+            모두 최소화
+          </PopoverMunu>
+          <PopoverMunu
             onClick={() => {
               dispatch(showAllPanels());
               handleClose();
             }}
           >
             전체 열기
-          </MenuItem>
+          </PopoverMunu>
+          <PopoverMunu
+            onClick={() => {
+              dispatch(arrangePanelsGrid());
+              handleClose();
+            }}
+          >
+            바둑판 정렬
+          </PopoverMunu>
+          <PopoverMunu
+            onClick={() => {
+              dispatch(arrangePanelsStack());
+              handleClose();
+            }}
+          >
+            스택 정렬
+          </PopoverMunu>
         </Popover>
       </Paper>
       <NewWindowForm
@@ -199,12 +203,28 @@ export default TaskList;
 const TaskMenuButton = styled(Button)({
   borderRadius: 0,
   border: 'none',
+  fontSize: '1.4rem',
+  fontWeight: '400',
   borderRight: '1px solid #E1E1E1',
   color: '#3A3A3A',
+  textTransform: 'none',
 
   '&:hover': {
     backgroundColor: '#F1F4FD',
     border: 'none',
     borderRight: '1px solid #E1E1E1',
+  },
+});
+
+const PopoverMunu = styled(MenuItem)({
+  width: '100%',
+  borderBottom: '1px solid #E1E1E1',
+  fontSize: '1.4rem',
+  lineHeight: '1.6rem',
+  fontWeight: '400',
+  height: '4rem',
+
+  '&:hover': {
+    backgroundColor: '#F1F4FD',
   },
 });

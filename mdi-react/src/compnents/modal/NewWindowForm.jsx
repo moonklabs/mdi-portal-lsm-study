@@ -154,7 +154,7 @@ const NewWindowForm = ({ open, onClose }) => {
                       value={content}
                       onChange={(e) => setContent(e.target.value)}
                       fullWidth
-                      required
+                      // required
                       sx={Field}
                     />
                   </Box>
