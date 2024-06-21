@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { TextField, Button, Box, Typography, Alert } from '@mui/material';
+import { Box, Typography, Alert } from '@mui/material';
 import { signIn } from '../../features/auth/authSlice';
+import {
+  FormFieldTitle,
+  FormSubmitButton,
+  FormTextBox,
+  FormTextField,
+} from '../../style/FormStyled';
 
 const LoginModal = ({ onClose }) => {
   const [formData, setFormData] = useState({ username: '', password: '' });
@@ -26,40 +32,45 @@ const LoginModal = ({ onClose }) => {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+    <Box component="form" onSubmit={handleSubmit} sx={{ border: 'none' }}>
       <Typography variant="h6">로그인</Typography>
-      <TextField
-        margin="normal"
-        required
-        fullWidth
-        id="username"
-        label="아이디"
-        name="username"
-        autoComplete="username"
-        autoFocus
-        onChange={handleChange}
-      />
-      <TextField
-        margin="normal"
-        required
-        fullWidth
-        name="password"
-        label="비밀번호"
-        type="password"
-        id="password"
-        autoComplete="current-password"
-        onChange={handleChange}
-      />
+      <FormTextBox>
+        <FormFieldTitle variant="body1">이름</FormFieldTitle>
+        <FormTextField
+          margin="normal"
+          required
+          fullWidth
+          id="username"
+          label="아이디"
+          name="username"
+          autoComplete="username"
+          autoFocus
+          onChange={handleChange}
+        />
+      </FormTextBox>
+      <FormTextBox>
+        <FormFieldTitle variant="body1">비밀번호</FormFieldTitle>
+        <FormTextField
+          margin="normal"
+          required
+          fullWidth
+          name="password"
+          label="비밀번호"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+          onChange={handleChange}
+        />
+      </FormTextBox>
       {error && <Alert severity="error">{error}</Alert>}
-      <Button
+      <FormSubmitButton
         type="submit"
         fullWidth
         variant="contained"
-        sx={{ mt: 3, mb: 2 }}
         disabled={loading}
       >
         로그인
-      </Button>
+      </FormSubmitButton>
     </Box>
   );
 };

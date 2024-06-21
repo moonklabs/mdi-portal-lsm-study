@@ -14,9 +14,9 @@ import {
   Select,
   MenuItem,
   Box,
-  Typography,
   styled,
 } from '@mui/material';
+import { FormFieldTitle, FormSubmitButton } from '../../style/FormStyled';
 
 const NewWindowForm = ({ open, onClose }) => {
   const [title, setTitle] = useState('');
@@ -108,13 +108,14 @@ const NewWindowForm = ({ open, onClose }) => {
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '1rem',
               }}
             >
-              <Box>
-                <Typography variant="body1" sx={FieldTitle}>
-                  새창 이름
-                </Typography>
+              <Box
+                sx={{
+                  mb: '1rem',
+                }}
+              >
+                <FormFieldTitle variant="body1">새창 이름</FormFieldTitle>
                 <TextField
                   label="이름"
                   value={title}
@@ -138,9 +139,7 @@ const NewWindowForm = ({ open, onClose }) => {
                     control={<Radio />}
                     label="브라우저로 사용"
                   />
-                  <Typography variant="body1" sx={FieldTitle}>
-                    URL
-                  </Typography>
+                  <FormFieldTitle variant="body1">URL</FormFieldTitle>
                   <Box
                     sx={{
                       display: 'flex',
@@ -170,9 +169,7 @@ const NewWindowForm = ({ open, onClose }) => {
                       fontSize: '1rem',
                     }}
                   />
-                  <Typography variant="body1" sx={FieldTitle}>
-                    시계
-                  </Typography>
+                  <FormFieldTitle variant="body1">시계</FormFieldTitle>
                   <Select
                     value={timezone}
                     onChange={(e) => setTimezone(e.target.value)}
@@ -203,8 +200,7 @@ const NewWindowForm = ({ open, onClose }) => {
               </RadioGroup>
               <DialogActions
                 sx={{
-                  mt: '1.4rem',
-                  padding: '0',
+                  p: 0,
                 }}
               >
                 <FormSubmitButton type="submit">생성</FormSubmitButton>
@@ -219,7 +215,7 @@ const NewWindowForm = ({ open, onClose }) => {
 
 const Field = {
   '& .MuiInputBase-input': {
-    padding: '0.6rem',
+    p: '0.8rem',
     fontSize: '0.8rem',
   },
   '& .MuiInputLabel-root': {
@@ -232,12 +228,6 @@ const Field = {
   },
 };
 
-const FieldTitle = {
-  color: '#343434',
-  fontSize: '0.9rem',
-  marginBottom: '0.6rem',
-};
-
 const RadioButtonLabel = styled(FormControlLabel)({
   '& .MuiFormControlLabel-label': {
     color: '#343434',
@@ -248,18 +238,6 @@ const RadioButtonLabel = styled(FormControlLabel)({
 const MenuItems = styled(MenuItem)({
   '& MuiInputBase-root': {
     fontSize: '0.2rem',
-  },
-});
-
-const FormSubmitButton = styled(Button)({
-  width: '100%',
-  backgroundColor: '#3B3B3B',
-  color: 'white',
-  padding: '0.6rem',
-  borderRadius: '0.4rem',
-
-  '&:hover': {
-    backgroundColor: '#111111',
   },
 });
 
