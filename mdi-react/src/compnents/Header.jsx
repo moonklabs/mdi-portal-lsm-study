@@ -76,16 +76,14 @@ function HeaderComponent() {
             </Button>
 
             <SaveBox color="inherit" onClick={handleSave}>
-              <Box>
-                <img
-                  src="/logo/ic_save.svg"
-                  alt="save"
-                  style={{
-                    width: '2rem',
-                    height: '2rem',
-                  }}
-                />
-              </Box>
+              <img
+                src="/logo/ic_save.svg"
+                alt="save"
+                style={{
+                  width: '2rem',
+                  height: '2rem',
+                }}
+              />
             </SaveBox>
           </HeaderContentBox>
         ) : (
@@ -134,7 +132,7 @@ const Header = styled(AppBar)({
   padding: '0 0 0 1rem',
 });
 
-const SaveBox = styled(Box)({
+const SaveBox = styled(Button)({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -142,6 +140,10 @@ const SaveBox = styled(Box)({
   backgroundColor: '#111',
   height: '100%',
   padding: '0 0.6rem',
+
+  '&: hover': {
+    backgroundColor: '#111',
+  },
 });
 
 const HeaderContentBox = styled(Box)({
