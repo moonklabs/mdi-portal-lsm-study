@@ -119,7 +119,7 @@ function TaskList() {
           anchorEl={anchorEl}
           onClose={handleClose}
           anchorOrigin={{
-            vertical: 'top,',
+            vertical: 'top',
             horizontal: 'right',
           }}
           transformOrigin={{
