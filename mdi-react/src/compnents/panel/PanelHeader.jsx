@@ -1,8 +1,5 @@
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import MaximizeIcon from '@mui/icons-material/Maximize';
-import MinimizeIcon from '@mui/icons-material/Minimize';
 import { useDispatch } from 'react-redux';
 import { updatePanel } from '../../features/panels/panelSlice';
 
@@ -22,6 +19,15 @@ const PanelHeader = ({ panel }) => {
     );
   };
 
+  const handleMinimize = () => {
+    dispatch(
+      updatePanel({
+        ...panel,
+        isHide: !panel.isHide,
+      })
+    );
+  };
+
   const handleClose = () => {
     dispatch(updatePanel({ ...panel, isClose: true }));
   };
@@ -33,18 +39,31 @@ const PanelHeader = ({ panel }) => {
         display: 'flex',
         alignItems: 'center',
         cursor: 'move',
-        padding: '4px',
+        padding: '0.4rem 0.8rem',
+        backgroundColor: '#3B3B3B',
+        color: '#fff',
+        borderRadius: '0.4rem 0.4rem 0 0',
       }}
     >
-      <Typography variant="h6" sx={{ flexGrow: 1 }}>
+      <Typography sx={{ flexGrow: 1, fontSize: '1rem' }}>
         {panel.title}
       </Typography>
-      <IconButton size="small" onClick={handleMaximize}>
-        {panel.isMaximized ? <MinimizeIcon /> : <MaximizeIcon />}
-      </IconButton>
-      <IconButton size="small" onClick={handleClose}>
-        <CloseIcon />
-      </IconButton>
+      <Box
+        sx={{
+          display: 'flex',
+          gap: '0.4rem',
+        }}
+      >
+        <IconButton size="small" onClick={handleMaximize}>
+          <img src="/logo/ic_add.svg" alt="" />
+        </IconButton>
+        <IconButton size="small" onClick={handleMinimize}>
+          <img src="/logo/ic_down.svg" alt="" />
+        </IconButton>
+        <IconButton size="small" onClick={handleClose}>
+          <img src="/logo/ic_close_s.svg" alt="close" />
+        </IconButton>
+      </Box>
     </header>
   );
 };
