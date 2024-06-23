@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Typography, Alert, Stack } from '@mui/material';
+import { Typography, Alert, Stack, Box } from '@mui/material';
 import { signUp } from '../../features/auth/authSlice';
 import {
   FormFieldTitle,
@@ -8,6 +8,7 @@ import {
   FormTextBox,
   FormTextField,
 } from '../../style/FormStyled';
+import { CloseBox, HeaderText } from '../../style/CommonStyled';
 
 const Signup = ({ onClose }) => {
   const [formData, setFormData] = useState({ username: '', password: '' });
@@ -57,15 +58,29 @@ const Signup = ({ onClose }) => {
         height: '100%',
       }}
     >
-      <Stack sx={{ marginTop: '0.6rem' }}>
-        <Typography
-          sx={{
-            fontSize: '1.8rem',
-            fontWeight: '700',
-          }}
-        >
-          회원가입
-        </Typography>
+      <Stack
+        sx={{
+          marginTop: '0.6rem',
+          display: 'flex',
+          justifyContent: 'space-between',
+          flexDirection: 'row',
+        }}
+      >
+        <Typography sx={HeaderText}>회원가입</Typography>
+        <Box onClick={onClose} sx={CloseBox}>
+          <img
+            src="/logo/ic_close.svg"
+            s
+            alt=""
+            style={{
+              width: '2.4rem',
+              height: '2.4rem',
+              '&:hover': {
+                backgroundColor: '#fff',
+              },
+            }}
+          />
+        </Box>
       </Stack>
       <Stack sx={{ marginTop: '2.5rem' }}>
         <FormTextBox>

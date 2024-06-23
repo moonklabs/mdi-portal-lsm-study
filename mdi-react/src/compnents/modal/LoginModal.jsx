@@ -8,7 +8,7 @@ import {
   FormTextBox,
   FormTextField,
 } from '../../style/FormStyled';
-import { CloseBox } from '../../style/CommonStyled';
+import { CloseBox, HeaderText } from '../../style/CommonStyled';
 
 const LoginModal = ({ onClose }) => {
   const [formData, setFormData] = useState({ username: '', password: '' });
@@ -66,15 +66,8 @@ const LoginModal = ({ onClose }) => {
           flexDirection: 'row',
         }}
       >
-        <Typography
-          sx={{
-            fontSize: '1.8rem',
-            fontWeight: '700',
-          }}
-        >
-          로그인
-        </Typography>
-        <Box sx={CloseBox}>
+        <Typography sx={HeaderText}>로그인</Typography>
+        <Box onClick={onClose} sx={CloseBox}>
           <img
             src="/logo/ic_close.svg"
             s
