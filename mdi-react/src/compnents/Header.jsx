@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import AppBar from '@mui/material/AppBar';
 import Typography from '@mui/material/Typography';
@@ -9,7 +9,7 @@ import { logout } from '../features/auth/authSlice';
 import LoginModal from './modal/LoginModal';
 import Signup from './modal/Signup';
 import { savePanels } from '../features/panels/panelSlice';
-import { styled } from '@mui/material';
+import { Snackbar, styled } from '@mui/material';
 import { Text } from '../style/CommonStyled';
 
 const modalStyle = {
@@ -34,6 +34,9 @@ function HeaderComponent() {
 
   const [loginOpen, setLoginOpen] = useState(false);
   const [signupOpen, setSignupOpen] = useState(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+
+  const saveBoxRef = useRef(null);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -41,7 +44,14 @@ function HeaderComponent() {
   };
 
   const handleSave = () => {
-    dispatch(savePanels(panels));
+    dispatch(savePanels(panels)).then(() => {
+      setSnackbarOpen(true);
+    });
+    console.log(saveBoxRef.current);
+  };
+
+  const handleCloseSnackbar = () => {
+    setSnackbarOpen(false);
   };
 
   const handleLoginOpen = () => setLoginOpen(true);
@@ -88,7 +98,7 @@ function HeaderComponent() {
             </Button>
           </HeaderContentBox>
         )}
-        <SaveBox color="inherit" onClick={handleSave}>
+        <SaveBox color="inherit" onClick={handleSave} ref={saveBoxRef}>
           <img
             src="/logo/ic_save.svg"
             alt="save"
@@ -109,6 +119,31 @@ function HeaderComponent() {
           <Signup onClose={handleSignupClose} />
         </Box>
       </Modal>
+      <Snackbar
+        open={snackbarOpen}
+        autoHideDuration={4000}
+        onClose={handleCloseSnackbar}
+        message="패널이 성공적으로 저장되었습니다."
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
+        }}
+        sx={{
+          position: 'absolute',
+          top: saveBoxRef.current
+            ? saveBoxRef.current.getBoundingClientRect().bottom + 10
+            : 'auto',
+          left: saveBoxRef.current
+            ? saveBoxRef.current.getBoundingClientRect().left
+            : 'auto',
+          transform: 'translateX(1.8rem) translateY(3.2rem)',
+          '& .MuiSnackbarContent-root': {
+            fontSize: '1.4rem',
+            backgroundColor: '#333',
+            color: '#fff',
+          },
+        }}
+      />
     </Header>
   );
 }
