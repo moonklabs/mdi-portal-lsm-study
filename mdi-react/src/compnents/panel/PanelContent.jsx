@@ -11,7 +11,7 @@ const PanelContent = ({ action, content, title, timezone, currentTime }) => {
         <iframe
           src={content}
           title={title}
-          style={{ width: '100%', height: '100%' }}
+          style={{ width: '100%', height: '100%', border: 'none' }}
         />
       ) : action === 'clock' ? (
         <div>

@@ -12,6 +12,7 @@ import {
   MenuItem,
   ButtonGroup,
   styled,
+  Modal,
 } from '@mui/material';
 import {
   arrangePanelsGrid,
@@ -190,10 +191,14 @@ function TaskList() {
           </PopoverMunu>
         </Popover>
       </Paper>
-      <NewWindowForm
-        open={newWindowOpen}
-        onClose={() => setNewWindowOpen(false)}
-      />
+      <Modal open={newWindowOpen} onClose={() => setNewWindowOpen(false)}>
+        <Box sx={modalStyle}>
+          <NewWindowForm
+            open={newWindowOpen}
+            onClose={() => setNewWindowOpen(false)}
+          />
+        </Box>
+      </Modal>
     </Box>
   );
 }
@@ -228,3 +233,16 @@ const PopoverMunu = styled(MenuItem)({
     backgroundColor: '#F1F4FD',
   },
 });
+
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: '40rem',
+  height: '50.6rem',
+  bgcolor: 'background.paper',
+  boxShadow: 3,
+  padding: '2.4rem',
+  borderRadius: '0.4rem',
+};
