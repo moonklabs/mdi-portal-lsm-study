@@ -3,6 +3,8 @@ import IconButton from '@mui/material/IconButton';
 import { useDispatch } from 'react-redux';
 import { updatePanel } from '../../features/panels/panelSlice';
 
+// const TASK_LIST_HEIGHT = 40;
+
 const PanelHeader = ({ panel }) => {
   const dispatch = useDispatch();
 
@@ -14,9 +16,10 @@ const PanelHeader = ({ panel }) => {
         x: 0,
         y: 0,
         width: window.innerWidth,
-        height: window.innerHeight,
+        height: window.innerHeight - 90,
       })
     );
+    console.log('maximize', window.innerHeight);
   };
 
   const handleMinimize = () => {

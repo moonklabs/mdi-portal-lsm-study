@@ -69,7 +69,7 @@ export const panelSlice = createSlice({
       const numCols = Math.ceil(Math.sqrt(numPanels));
       const numRows = Math.ceil(numPanels / numCols);
       const panelWidth = window.innerWidth / numCols;
-      const panelHeight = window.innerHeight / numRows;
+      const panelHeight = (window.innerHeight - 90) / numRows;
 
       console.log(numPanels, numCols, numRows, panelWidth, panelHeight);
 
