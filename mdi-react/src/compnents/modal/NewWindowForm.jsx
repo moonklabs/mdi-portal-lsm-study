@@ -8,19 +8,29 @@ import {
   DialogActions,
   Button,
   TextField,
-  RadioGroup,
+  Checkbox,
   FormControlLabel,
-  Radio,
   Select,
   MenuItem,
   Box,
   styled,
+  Stack,
+  InputLabel,
 } from '@mui/material';
-import { FormFieldTitle, FormSubmitButton } from '../../style/FormStyled';
+import {
+  FormCheckLabel,
+  FormFieldTitle,
+  FormSelectField,
+  FormSubmitButton,
+  FormTextBox,
+  FormTextField,
+} from '../../style/FormStyled';
+import { CloseBox, HeaderText } from '../../style/CommonStyled';
 
 const NewWindowForm = ({ open, onClose }) => {
   const [title, setTitle] = useState('');
-  const [action, setAction] = useState('');
+  const [isBrowserChecked, setIsBrowserChecked] = useState(false);
+  const [isClockChecked, setIsClockChecked] = useState(false);
   const [content, setContent] = useState('');
   const [timezone, setTimezone] = useState('default');
   const dispatch = useDispatch();
@@ -28,7 +38,7 @@ const NewWindowForm = ({ open, onClose }) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
-    if (action === 'clock' && timezone === 'default') {
+    if (isClockChecked && timezone === 'default') {
       alert('시계 패널을 생성하려면 타임존을 선택해주세요.');
       return;
     }
@@ -45,9 +55,9 @@ const NewWindowForm = ({ open, onClose }) => {
       isClose: false,
       isDrag: false,
       isResize: false,
-      isClock: action === 'clock',
-      isBrowser: action === 'browser',
-      action,
+      isClock: isClockChecked,
+      isBrowser: isBrowserChecked,
+      action: isClockChecked ? 'clock' : 'browser',
       title,
       content,
       timezone,
@@ -58,43 +68,41 @@ const NewWindowForm = ({ open, onClose }) => {
     onClose();
   };
 
+  const handleBrowserChange = () => {
+    setIsBrowserChecked(!isBrowserChecked);
+    if (isClockChecked) {
+      setIsClockChecked(false);
+    }
+  };
+
+  const handleClockChange = () => {
+    setIsClockChecked(!isClockChecked);
+    if (isBrowserChecked) {
+      setIsBrowserChecked(false);
+    }
+  };
+
   return (
     <Dialog open={open} onClose={onClose}>
       <Box
         sx={{
-          width: '25rem',
-          height: 'auto',
+          width: '40rem',
+          height: '50.6rem',
           display: 'flex',
           flexDirection: 'column',
-          padding: '1.6rem',
-          gap: '1rem',
+          padding: '3rem 2.4rem',
         }}
       >
         <Box
           sx={{
             display: 'flex',
             justifyContent: 'space-between',
+            alignItems: 'center',
+            height: '2.4rem',
           }}
         >
-          <DialogTitle
-            sx={{
-              padding: '0',
-            }}
-          >
-            새 창 만들기
-          </DialogTitle>
-          <Button
-            onClick={onClose}
-            sx={{
-              minWidth: '2rem',
-              minHeight: '2rem',
-              padding: '0.5rem',
-              borderRadius: '50%',
-              '&:hover': {
-                backgroundColor: '#fff',
-              },
-            }}
-          >
+          <DialogTitle sx={HeaderText}>새 창 만들기</DialogTitle>
+          <Button onClick={onClose} sx={CloseBox}>
             <img src="logo/ic_close.svg" alt="close" />
           </Button>
         </Box>
@@ -108,136 +116,146 @@ const NewWindowForm = ({ open, onClose }) => {
               sx={{
                 display: 'flex',
                 flexDirection: 'column',
+                justifyContent: 'center',
+                height: '100%',
+                mt: '2.4rem',
               }}
             >
-              <Box
-                sx={{
-                  mb: '1rem',
-                }}
-              >
+              <FormTextBox>
                 <FormFieldTitle variant="body1">새창 이름</FormFieldTitle>
-                <TextField
+                <FormTextField
                   label="이름"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   fullWidth
                   required
-                  sx={Field}
                 />
-              </Box>
-
-              <RadioGroup
-                value={action}
-                onChange={(e) => setAction(e.target.value)}
+              </FormTextBox>
+              <Stack
                 sx={{
-                  gap: '1rem',
+                  fontSize: '1.4rem',
                 }}
               >
-                <Box>
-                  <RadioButtonLabel
-                    value="browser"
-                    control={<Radio />}
-                    label="브라우저로 사용"
-                  />
-                  <FormFieldTitle variant="body1">URL</FormFieldTitle>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      gap: '1rem',
-                      alignItems: 'center',
-                    }}
-                  >
-                    <TextField
-                      label="URL"
-                      value={content}
-                      onChange={(e) => setContent(e.target.value)}
-                      fullWidth
-                      // required
-                      sx={Field}
+                <FormCheckLabel
+                  control={
+                    <StyledCheckbox
+                      checked={isBrowserChecked}
+                      onChange={handleBrowserChange}
+                      disabled={isClockChecked}
                     />
-                  </Box>
-                </Box>
-                <Box>
-                  <RadioButtonLabel
-                    value="clock"
-                    control={<Radio />}
-                    label="시계 사용"
-                    sx={{
-                      color: '#343434',
-                      fontSize: '1rem',
-                    }}
+                  }
+                  label="브라우저로 사용"
+                  sx={{
+                    marginBottom: '1.5rem',
+                  }}
+                />
+                <FormTextBox>
+                  <FormFieldTitle variant="body1">URL</FormFieldTitle>
+                  <FormTextField
+                    label="URL"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    fullWidth
+                    required={isBrowserChecked}
+                    disabled={!isBrowserChecked}
                   />
-                  <FormFieldTitle variant="body1">시계</FormFieldTitle>
-                  <Select
+                </FormTextBox>
+                <FormCheckLabel
+                  control={
+                    <StyledCheckbox
+                      checked={isClockChecked}
+                      onChange={handleClockChange}
+                      disabled={isBrowserChecked}
+                    />
+                  }
+                  label="시계 사용"
+                  sx={{
+                    marginBottom: '1.5rem',
+                  }}
+                />
+                <Box>
+                  <FormSelectField
                     value={timezone}
                     onChange={(e) => setTimezone(e.target.value)}
                     fullWidth
-                    sx={Field}
+                    disabled={!isClockChecked}
+                    sx={{
+                      '& .MuiSelect-select': {
+                        color: '#939393',
+                        fontSize: '1.4rem',
+                        height: '2rem',
+                        // top: '50%',
+                        // transform: 'translate(14px, 30%)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        padding: '1rem',
+                      },
+                    }}
                   >
                     <MenuItems value="default">도시를 선택해주세요.</MenuItems>
-                    <MenuItem value="Asia/Seoul">Seoul (UTC+09:00)</MenuItem>
-                    <MenuItem value="Asia/Tokyo">Tokyo (UTC+09:00)</MenuItem>
-                    <MenuItem value="America/New_York">
+                    <MenuItems value="Asia/Seoul">Seoul (UTC+09:00)</MenuItems>
+                    <MenuItems value="Asia/Tokyo">Tokyo (UTC+09:00)</MenuItems>
+                    <MenuItems value="America/New_York">
                       New York (UTC-05:00)
-                    </MenuItem>
-                    <MenuItem value="Europe/London">
+                    </MenuItems>
+                    <MenuItems value="Europe/London">
                       London (UTC+00:00)
-                    </MenuItem>
-                    <MenuItem value="Europe/Paris">Paris (UTC+01:00)</MenuItem>
-                    <MenuItem value="Europe/Berlin">
+                    </MenuItems>
+                    <MenuItems value="Europe/Paris">
+                      Paris (UTC+01:00)
+                    </MenuItems>
+                    <MenuItems value="Europe/Berlin">
                       Berlin (UTC+01:00)
-                    </MenuItem>
-                    <MenuItem value="Asia/Shanghai">
+                    </MenuItems>
+                    <MenuItems value="Asia/Shanghai">
                       Shanghai (UTC+08:00)
-                    </MenuItem>
-                    <MenuItem value="Australia/Sydney">
+                    </MenuItems>
+                    <MenuItems value="Australia/Sydney">
                       Sydney (UTC+10:00)
-                    </MenuItem>
-                  </Select>
+                    </MenuItems>
+                  </FormSelectField>
                 </Box>
-              </RadioGroup>
-              <DialogActions
-                sx={{
-                  p: 0,
-                }}
-              >
-                <FormSubmitButton type="submit">생성</FormSubmitButton>
-              </DialogActions>
+              </Stack>
             </Box>
           </form>
         </DialogContent>
+        <DialogActions
+          sx={{
+            p: 0,
+            mt: 'auto',
+          }}
+        >
+          <FormSubmitButton
+            type="submit"
+            sx={{
+              p: 0,
+            }}
+          >
+            생성
+          </FormSubmitButton>
+        </DialogActions>
       </Box>
     </Dialog>
   );
 };
 
-const Field = {
-  '& .MuiInputBase-input': {
-    p: '0.8rem',
-    fontSize: '0.8rem',
-  },
-  '& .MuiInputLabel-root': {
-    top: '50%',
-    transform: 'translate(0.6rem, -50%)',
-    fontSize: '0.8rem',
-  },
-  '& .MuiInputLabel-shrink': {
-    transform: 'translate(0.8rem, -150%)',
-  },
-};
-
-const RadioButtonLabel = styled(FormControlLabel)({
-  '& .MuiFormControlLabel-label': {
-    color: '#343434',
-    fontSize: '0.9rem',
-  },
+const MenuItems = styled(MenuItem)({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '4rem',
+  fontSize: '1.4rem',
 });
 
-const MenuItems = styled(MenuItem)({
-  '& MuiInputBase-root': {
-    fontSize: '0.2rem',
+const StyledCheckbox = styled(Checkbox)({
+  color: '#CFCFCF',
+  marginRight: '0.5rem',
+
+  '&.Mui-checked': {
+    color: '#3A3A3A',
+  },
+  '& .MuiSvgIcon-root': {
+    fontSize: '2.125rem',
   },
 });
 

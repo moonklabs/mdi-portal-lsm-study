@@ -10,17 +10,19 @@ import LoginModal from './modal/LoginModal';
 import Signup from './modal/Signup';
 import { savePanels } from '../features/panels/panelSlice';
 import { styled } from '@mui/material';
-import { Text } from '../style/TextStyled';
+import { Text } from '../style/CommonStyled';
 
 const modalStyle = {
   position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: 360,
+  height: 350,
   bgcolor: 'background.paper',
   boxShadow: 3,
-  p: 4,
+  padding: '2.4rem',
+  borderRadius: '0.4rem',
 };
 
 function HeaderComponent() {

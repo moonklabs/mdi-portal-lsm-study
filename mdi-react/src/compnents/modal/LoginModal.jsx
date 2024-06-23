@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Typography, Alert } from '@mui/material';
+import { Box, Typography, Alert, Stack } from '@mui/material';
 import { signIn } from '../../features/auth/authSlice';
 import {
   FormFieldTitle,
@@ -8,11 +8,30 @@ import {
   FormTextBox,
   FormTextField,
 } from '../../style/FormStyled';
+import { CloseBox } from '../../style/CommonStyled';
 
 const LoginModal = ({ onClose }) => {
   const [formData, setFormData] = useState({ username: '', password: '' });
   const dispatch = useDispatch();
   const { loading, error } = useSelector((state) => state.auth);
+  const [usernameLabelHidden, setUsernameLabelHidden] = useState(false);
+  const [passwordLabelHidden, setPasswordLabelHidden] = useState(false);
+
+  const handleFocus = (field) => {
+    if (field === 'username') {
+      setUsernameLabelHidden(true);
+    } else if (field === 'password') {
+      setPasswordLabelHidden(true);
+    }
+  };
+
+  const handleBlur = (field) => {
+    if (field === 'username' && formData.username === '') {
+      setUsernameLabelHidden(false);
+    } else if (field === 'password' && formData.password === '') {
+      setPasswordLabelHidden(false);
+    }
+  };
 
   const handleChange = (e) => {
     setFormData({
@@ -32,46 +51,106 @@ const LoginModal = ({ onClose }) => {
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit} sx={{ border: 'none' }}>
-      <Typography variant="h6">로그인</Typography>
-      <FormTextBox>
-        <FormFieldTitle variant="body1">이름</FormFieldTitle>
-        <FormTextField
-          margin="normal"
-          required
-          fullWidth
-          id="username"
-          label="아이디"
-          name="username"
-          autoComplete="username"
-          autoFocus
-          onChange={handleChange}
-        />
-      </FormTextBox>
-      <FormTextBox>
-        <FormFieldTitle variant="body1">비밀번호</FormFieldTitle>
-        <FormTextField
-          margin="normal"
-          required
-          fullWidth
-          name="password"
-          label="비밀번호"
-          type="password"
-          id="password"
-          autoComplete="current-password"
-          onChange={handleChange}
-        />
-      </FormTextBox>
-      {error && <Alert severity="error">{error}</Alert>}
-      <FormSubmitButton
-        type="submit"
-        fullWidth
-        variant="contained"
-        disabled={loading}
+    <Stack
+      component="form"
+      onSubmit={handleSubmit}
+      sx={{
+        height: '100%',
+      }}
+    >
+      <Stack
+        sx={{
+          marginTop: '0.6rem',
+          display: 'flex',
+          justifyContent: 'space-between',
+          flexDirection: 'row',
+        }}
       >
-        로그인
-      </FormSubmitButton>
-    </Box>
+        <Typography
+          sx={{
+            fontSize: '1.8rem',
+            fontWeight: '700',
+          }}
+        >
+          로그인
+        </Typography>
+        <Box sx={CloseBox}>
+          <img
+            src="/logo/ic_close.svg"
+            s
+            alt=""
+            style={{
+              width: '2.4rem',
+              height: '2.4rem',
+              '&:hover': {
+                backgroundColor: '#fff',
+              },
+            }}
+          />
+        </Box>
+      </Stack>
+      <Stack sx={{ marginTop: '2.5rem' }}>
+        <FormTextBox>
+          <FormFieldTitle variant="body1">아이디</FormFieldTitle>
+          <FormTextField
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="아이디"
+            name="username"
+            autoComplete="username"
+            autoFocus
+            InputLabelProps={{
+              shrink: false,
+              style: {
+                opacity: usernameLabelHidden ? 0 : 1,
+              },
+            }}
+            onFocus={() => handleFocus('username')}
+            onBlur={() => handleBlur('username')}
+            onChange={handleChange}
+          />
+        </FormTextBox>
+        <FormTextBox>
+          <FormFieldTitle variant="body1">비밀번호</FormFieldTitle>
+          <FormTextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="비밀번호"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+            InputLabelProps={{
+              shrink: false,
+              style: {
+                opacity: passwordLabelHidden ? 0 : 1,
+              },
+            }}
+            onFocus={() => handleFocus('password')}
+            onBlur={() => handleBlur('password')}
+            onChange={handleChange}
+          />
+        </FormTextBox>
+      </Stack>
+      <Stack
+        sx={{
+          marginTop: 'auto',
+        }}
+      >
+        {error && <Alert severity="error">{error}</Alert>}
+        <FormSubmitButton
+          type="submit"
+          fullWidth
+          variant="contained"
+          disabled={loading}
+        >
+          로그인
+        </FormSubmitButton>
+      </Stack>
+    </Stack>
   );
 };
 
