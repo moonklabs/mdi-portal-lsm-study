@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import { useDispatch } from 'react-redux';
 import { updatePanel } from '../../features/panels/panelSlice';
@@ -39,31 +39,50 @@ const PanelHeader = ({ panel }) => {
         display: 'flex',
         alignItems: 'center',
         cursor: 'move',
-        padding: '0.4rem 0.8rem',
+        height: '3.6rem',
         backgroundColor: '#3B3B3B',
         color: '#fff',
         borderRadius: '0.4rem 0.4rem 0 0',
+        width: '100%',
       }}
     >
-      <Typography sx={{ flexGrow: 1, fontSize: '1rem' }}>
-        {panel.title}
-      </Typography>
-      <Box
+      <Stack
         sx={{
           display: 'flex',
-          gap: '0.4rem',
+          flexDirection: 'row',
+          width: '100%',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: '0rem 1.2rem',
+          height: '1.6rem',
         }}
       >
-        <IconButton size="small" onClick={handleMaximize}>
-          <img src="/logo/ic_add.svg" alt="" />
-        </IconButton>
-        <IconButton size="small" onClick={handleMinimize}>
-          <img src="/logo/ic_down.svg" alt="" />
-        </IconButton>
-        <IconButton size="small" onClick={handleClose}>
-          <img src="/logo/ic_close_s.svg" alt="close" />
-        </IconButton>
-      </Box>
+        <Typography
+          sx={{
+            flexGrow: 1,
+            fontSize: '1.3rem',
+            fontWeight: '700',
+          }}
+        >
+          {panel.title}
+        </Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            gap: '0.4rem',
+          }}
+        >
+          <IconButton size="small" onClick={handleMaximize}>
+            <img src="/logo/ic_add.svg" alt="" />
+          </IconButton>
+          <IconButton size="small" onClick={handleMinimize}>
+            <img src="/logo/ic_down.svg" alt="" />
+          </IconButton>
+          <IconButton size="small" onClick={handleClose}>
+            <img src="/logo/ic_close_s.svg" alt="close" />
+          </IconButton>
+        </Box>
+      </Stack>
     </header>
   );
 };
