@@ -12,24 +12,8 @@ import { savePanels } from '../features/panels/panelSlice';
 import { Snackbar, styled } from '@mui/material';
 import { Text } from '../style/CommonStyled';
 
-const modalStyle = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 360,
-  height: 350,
-  bgcolor: 'background.paper',
-  boxShadow: 3,
-  padding: '2.4rem',
-  borderRadius: '0.4rem',
-};
-
-function HeaderComponent() {
+const HeaderComponent = ({ isLoggedIn, username }) => {
   const dispatch = useDispatch();
-  const token = localStorage.getItem('token');
-  const username = localStorage.getItem('username');
-  const isLoggedIn = !!token;
   const panels = useSelector((state) => state.panel);
 
   const [loginOpen, setLoginOpen] = useState(false);
@@ -146,12 +130,12 @@ function HeaderComponent() {
       />
     </Header>
   );
-}
+};
 
 export default HeaderComponent;
 
 const Header = styled(AppBar)({
-  background: 'linear-gradient(315deg, #3A3A3A 95%, #A8A8A8 104%)',
+  background: 'linear-gradient(315deg, #3A3A3A 98%, #A8A8A8 102%)',
   color: '#fff',
   height: '5rem',
   overflow: 'hidden',
@@ -190,3 +174,16 @@ const CenterBar = styled(Box)({
   width: '1px',
   backgroundColor: '#777777',
 });
+
+const modalStyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 360,
+  height: 350,
+  bgcolor: 'background.paper',
+  boxShadow: 3,
+  padding: '2.4rem',
+  borderRadius: '0.4rem',
+};

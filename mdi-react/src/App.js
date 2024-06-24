@@ -10,6 +10,7 @@ import { fetchPanels } from './features/panels/panelSlice';
 function App() {
   const dispatch = useDispatch();
   const isLoggedIn = localStorage.getItem('token');
+  const username = localStorage.getItem('username');
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -32,7 +33,7 @@ function App() {
           height: '100vh',
         }}
       >
-        <HeaderComponent />
+        <HeaderComponent isLoggedIn={isLoggedIn} username={username} />
         <Window />
         <TaskList />
       </Box>
