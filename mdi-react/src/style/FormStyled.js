@@ -24,6 +24,7 @@ export const FormSubmitButton = styled(Button)({
   borderRadius: '0.6rem',
   margin: '0',
   marginTop: 'auto',
+  boxShadow: 'none',
 
   '&:hover': {
     backgroundColor: '#111111',
@@ -32,7 +33,11 @@ export const FormSubmitButton = styled(Button)({
 
 export const FormTextField = styled(TextField)({
   margin: '0',
-  '& .MuiInputBase-root': { height: '4rem', padding: '1rem' },
+  '& .MuiInputBase-root': {
+    height: '4rem',
+    padding: '1rem',
+    // backgroundColor: '#111',
+  },
   '& .MuiInputBase-input': { padding: '0', fontSize: '1.4rem', height: '2rem' },
   '& .MuiInputLabel-root': {
     top: '50%',
@@ -53,23 +58,12 @@ export const FormTextField = styled(TextField)({
 
 export const FormSelectField = styled(Select)({
   margin: '0',
-  // '& .MuiInputBase-root': { height: '4rem', padding: '1rem' },
-  // '& .MuiInputBase-input': { padding: '0', fontSize: '1.4rem', height: '4rem' },
-  // '& .MuiSelect-select': {
-  //   padding: '0',
-  //   height: '4rem',
-  //   lineHeight: '4rem',
-
-  //   '&:focus': {
-  //     backgroundColor: 'transparent',
-  //   },
-  // },
 });
 
 export const FormTextBox = styled(Box)({
   display: 'flex',
   flexDirection: 'column',
-  marginBottom: '2.4rem',
+  marginBottom: '2rem',
 });
 
 export const FormCheckLabel = styled(FormControlLabel)({
