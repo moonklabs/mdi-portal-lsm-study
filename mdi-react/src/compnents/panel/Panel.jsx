@@ -42,8 +42,8 @@ const Panel = ({ panel }) => {
       onDragStop={handleDragStop}
       onResizeStop={handleResizeStop}
       onMouseDown={handleClick}
-      minWidth={200}
-      minHeight={200}
+      minWidth={100}
+      minHeight={100}
       bounds="parent"
     >
       <Box
@@ -55,12 +55,12 @@ const Panel = ({ panel }) => {
       >
         <Paper
           component="section"
-          elevation={3}
           sx={{
             width: '100%',
             height: '100%',
             display: 'flex',
             flexDirection: 'column',
+            boxShadow: '0px 2px 2px 0px #C7C7C752, 0px 9px 6px 0px #A7A7A72E',
           }}
         >
           <PanelHeader panel={panel} />

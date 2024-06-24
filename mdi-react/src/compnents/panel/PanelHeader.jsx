@@ -45,7 +45,7 @@ const PanelHeader = ({ panel }) => {
         height: '3.6rem',
         backgroundColor: '#3B3B3B',
         color: '#fff',
-        borderRadius: '0.4rem 0.4rem 0 0',
+        borderRadius: '0.6rem 0.6rem 0 0',
         width: '100%',
       }}
     >
