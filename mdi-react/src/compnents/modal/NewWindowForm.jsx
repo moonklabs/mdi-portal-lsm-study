@@ -27,12 +27,35 @@ const NewWindowForm = ({ open, onClose }) => {
   const [content, setContent] = useState('');
   const [timezone, setTimezone] = useState('default');
   const dispatch = useDispatch();
+  const [titleLabelHidden, setTitleLabelHidden] = useState(false);
+  const [urlLabelHidden, setUrlLabelHidden] = useState(false);
+
+  const handleFocus = (field) => {
+    if (field === 'title') {
+      setTitleLabelHidden(true);
+    } else if (field === 'content') {
+      setUrlLabelHidden(true);
+    }
+  };
+
+  const handleBlur = (field) => {
+    if (field === 'title' && title === '') {
+      setTitleLabelHidden(false);
+    } else if (field === 'content' && content === '') {
+      setUrlLabelHidden(false);
+    }
+  };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
 
     if (isClockChecked && timezone === 'default') {
       alert('시계 패널을 생성하려면 타임존을 선택해주세요.');
+      return;
+    }
+
+    if (isBrowserChecked && content === '') {
+      alert('브라우저 패널을 생성하려면 URL을 입력해주세요.');
       return;
     }
 
@@ -52,8 +75,8 @@ const NewWindowForm = ({ open, onClose }) => {
       isBrowser: isBrowserChecked,
       action: isClockChecked ? 'clock' : 'browser',
       title,
-      content,
-      timezone,
+      content: isBrowserChecked ? content : null,
+      timezone: isClockChecked ? timezone : null,
       order: Date.now(),
     };
 
@@ -108,10 +131,19 @@ const NewWindowForm = ({ open, onClose }) => {
           <FormFieldTitle variant="body1">새창 이름</FormFieldTitle>
           <FormTextField
             label="이름"
+            name="title"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
             fullWidth
             required
+            InputLabelProps={{
+              shrink: false,
+              style: {
+                opacity: titleLabelHidden ? 0 : 1,
+              },
+            }}
+            onFocus={() => handleFocus('title')}
+            onBlur={() => handleBlur('title')}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </FormTextBox>
         <Stack
@@ -136,11 +168,25 @@ const NewWindowForm = ({ open, onClose }) => {
             <FormFieldTitle variant="body1">URL</FormFieldTitle>
             <FormTextField
               label="URL"
+              name="content"
               value={content}
-              onChange={(e) => setContent(e.target.value)}
               fullWidth
               required={isBrowserChecked}
               disabled={!isBrowserChecked}
+              sx={{
+                '& .MuiInputBase-root': {
+                  backgroundColor: isBrowserChecked ? '#fff' : '#F4F4F4',
+                },
+              }}
+              InputLabelProps={{
+                shrink: false,
+                style: {
+                  opacity: urlLabelHidden ? 0 : 1,
+                },
+              }}
+              onFocus={() => handleFocus('content')}
+              onBlur={() => handleBlur('content')}
+              onChange={(e) => setContent(e.target.value)}
             />
           </FormTextBox>
           <FormCheckLabel
@@ -164,8 +210,8 @@ const NewWindowForm = ({ open, onClose }) => {
               fullWidth
               disabled={!isClockChecked}
               sx={{
+                backgroundColor: isClockChecked ? '#ffffff' : '#F4F4F4',
                 '& .MuiSelect-select': {
-                  color: '#939393',
                   fontSize: '1.4rem',
                   height: '2rem',
                   display: 'flex',
@@ -197,20 +243,20 @@ const NewWindowForm = ({ open, onClose }) => {
   );
 };
 
-const MenuItems = styled(MenuItem)({
+const MenuItems = styled(MenuItem)(({ selected }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
   height: '4rem',
   fontSize: '1.4rem',
-});
+  color: selected ? '#000' : '#939393',
+}));
 
 const StyledCheckbox = styled(Checkbox)({
   color: '#CFCFCF',
   marginRight: '0.5rem',
-
   '&.Mui-checked': {
-    color: '#111111',
+    color: '#3B3B3B',
   },
   '& .MuiSvgIcon-root': {
     fontSize: '2.125rem',
