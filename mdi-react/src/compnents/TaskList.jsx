@@ -228,6 +228,7 @@ const PopoverMunu = styled(MenuItem)({
   lineHeight: '1.6rem',
   fontWeight: '400',
   height: '4rem',
+  minHeight: 'auto',
 
   '&:hover': {
     backgroundColor: '#F1F4FD',
