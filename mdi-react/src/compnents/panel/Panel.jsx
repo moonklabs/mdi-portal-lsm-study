@@ -60,7 +60,9 @@ const Panel = ({ panel }) => {
             height: '100%',
             display: 'flex',
             flexDirection: 'column',
-            boxShadow: '0px 2px 2px 0px #C7C7C752, 0px 9px 6px 0px #A7A7A72E',
+            boxShadow: '2px 1px 4px 0px #7777771F, 0px 5px 6px 0px #A7A7A72E',
+
+            borderRadius: '0.6rem 0.6rem 0 0',
           }}
         >
           <PanelHeader panel={panel} />

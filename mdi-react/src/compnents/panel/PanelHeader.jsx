@@ -43,9 +43,10 @@ const PanelHeader = ({ panel }) => {
         alignItems: 'center',
         cursor: 'move',
         height: '3.6rem',
-        backgroundColor: '#3B3B3B',
-        color: '#fff',
+        backgroundColor: '#F5F5F5',
+        color: '#3B3B3B',
         borderRadius: '0.6rem 0.6rem 0 0',
+        border: '1px solid #D3D3D3',
         width: '100%',
       }}
     >
@@ -75,8 +76,14 @@ const PanelHeader = ({ panel }) => {
             gap: '0.4rem',
           }}
         >
-          <IconButton size="small" onClick={handleMaximize}>
-            <img src="/logo/ic_add.svg" alt="" />
+          <IconButton
+            size="small"
+            onClick={handleMaximize}
+            style={{
+              color: '#3B3B3B',
+            }}
+          >
+            <img src="/logo/ic_add.svg" alt="" style={{}} />
           </IconButton>
           <IconButton size="small" onClick={handleMinimize}>
             <img src="/logo/ic_down.svg" alt="" />

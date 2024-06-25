@@ -70,7 +70,6 @@ const LoginModal = ({ onClose }) => {
         <Box onClick={onClose} sx={CloseBox}>
           <img
             src="/logo/ic_close.svg"
-            s
             alt=""
             style={{
               width: '2.4rem',

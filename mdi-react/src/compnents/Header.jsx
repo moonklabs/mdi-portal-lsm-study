@@ -31,7 +31,6 @@ const HeaderComponent = ({ isLoggedIn, username }) => {
     dispatch(savePanels(panels)).then(() => {
       setSnackbarOpen(true);
     });
-    console.log(saveBoxRef.current);
   };
 
   const handleCloseSnackbar = () => {
@@ -45,7 +44,13 @@ const HeaderComponent = ({ isLoggedIn, username }) => {
   const handleSignupClose = () => setSignupOpen(false);
 
   return (
-    <Header position="static" component="header">
+    <Header
+      position="static"
+      component="header"
+      sx={{
+        borderBottom: '1px solid #111',
+      }}
+    >
       <Box
         component="section"
         sx={{
@@ -56,7 +61,13 @@ const HeaderComponent = ({ isLoggedIn, username }) => {
           height: '100%',
         }}
       >
-        <Box sx={{ flexGrow: 1 }}>
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: 'flex',
+            alignItems: 'center',
+          }}
+        >
           <img src="/logo/logo.svg" alt="mdi-portal-logo" />
         </Box>
         {isLoggedIn ? (

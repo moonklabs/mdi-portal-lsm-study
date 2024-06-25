@@ -5,6 +5,9 @@ const PanelContent = ({ action, content, title, timezone, currentTime }) => {
     <Box
       sx={{
         height: '100%',
+        borderWidth: '0 1px 1px 1px',
+        borderColor: '#D3D3D3',
+        borderStyle: 'solid',
       }}
     >
       {action === 'browser' ? (
