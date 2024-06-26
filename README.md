@@ -1,8 +1,10 @@
 # React Mdi Portal
 
-<h3 align="center" style="margin: 30px;">브라우저 내 개인화된 위젯을 생성해보세요.</h3>
-
-![시연영상](https://github.com/moonklabs/mdi-portal-lsm-study/assets/62977652/77ab2ba6-d743-4ff5-aafc-4b6bfce51b97)
+<h3 align="center">브라우저 내 개인화된 위젯을 생성해보세요.</h3>
+<hr style="width: 100%; margin: 25px 0;">
+<div align="center">
+  <img src="https://github.com/moonklabs/mdi-portal-lsm-study/assets/62977652/77ab2ba6-d743-4ff5-aafc-4b6bfce51b97" alt="시연영상">
+</div>
 
 ## About react-mdi-portal
 
