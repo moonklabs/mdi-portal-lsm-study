@@ -1,16 +1,28 @@
-# MDI PORTAL
+# React Mdi Portal
 
-이 프로젝트는 Vanilla JavaScript, NestJS를 활용한 풀스택 프로젝트입니다. 개인화된 웹 환경을 사용하고 싶으시다면 하단 시작하기를 참고해 로컬에서 간편하게 사용하실 수 있습니다.[API 명세](docs/API.md)
+<h3 align="center" style="margin: 30px;">브라우저 내 개인화된 위젯을 생성해보세요.</h3>
 
 ![시연영상](https://github.com/moonklabs/mdi-portal-lsm-study/assets/62977652/77ab2ba6-d743-4ff5-aafc-4b6bfce51b97)
 
-## About MDI-PORTAL
+## About react-mdi-portal
 
-MDI 프로젝트는 웹환경에서 개인화된 웹 환경을 제공하는 프로젝트입니다. 이 프로젝트를 통해서 다음과 같은 경험을 할 수 있습니다!
+프로젝트는 React, Nest로 구성되어 있으며, 다음과 같은 기능을 지원합니다.
 
-- 사용자는 시계, 브라우저 등 다양한 패널을 자유롭게 배치하고 크기를 조정할 수 있습니다. 패널은 Drag&Drop으로 쉽게 이동할 수 있으며, 숨기기, 최대화, 최소화 등의 기능을 통해 패널을 관리할 수 있습니다.
+<!-- - 사용자는 시계, 브라우저 등 다양한 패널을 자유롭게 배치하고 크기를 조정할 수 있습니다. 패널은 Drag&Drop으로 쉽게 이동할 수 있으며, 숨기기, 최대화, 최소화 등의 기능을 통해 패널을 관리할 수 있습니다.
 
-- 하단의 taskbar 메뉴를 통해 모든 패널을 한 번에 숨기거나 열 수 있으며, grid 정렬과 stack 정렬 기능을 사용하여 패널을 깔끔하게 정렬할 수 있습니다.
+- 하단의 taskbar 메뉴를 통해 모든 패널을 한 번에 숨기거나 열 수 있으며, grid 정렬과 stack 정렬 기능을 사용하여 패널을 깔끔하게 정렬할 수 있습니다. -->
+
+- 🌐 브라우저 위젯 생성
+- 🕒 시계 위젯 생성
+- 🖱️ 위젯 Drag&Drop
+- ↔️ 위젯 Resize
+- 📏 위젯 Grid Sort
+- 🗂️ 위젯 Stack Sort
+- 👁️ 위젯 숨기기
+- 🔲 위젯 최대화
+- 💾 위젯 상태 저장
+- 👁️‍🗨️ 모든 위젯 숨기기
+- 📂 모든 위젯 오픈
 
 ###
 
@@ -19,13 +31,14 @@ MDI 프로젝트는 웹환경에서 개인화된 웹 환경을 제공하는 프�
 - [Backend](./backend/README.md)
 - [Frontend](./frontend/README.md)
 
-## 시작하기
+## Quick start
 
 ### 요구사항
 
-- Node.js
+- React
+- Node.js (16.20.2)
 - Nest.js
-- Mysql, SQLite, PostgreSQL 중 선택
+- Sqlite (mysql, postgresql 선택 가능)
 - npm
 
 ### 1. 레포지토리 클론
@@ -34,7 +47,7 @@ MDI 프로젝트는 웹환경에서 개인화된 웹 환경을 제공하는 프�
 git clone https://github.com/moonklabs/mdi-portal-lsm-study.git
 ```
 
-### 1. 프론트엔드 설정
+### 1. FrontEnd
 
 터미널을 생성해 아래 명령어를 입력해주세요. VSCode를 사용중이시라면 상단에 터미널을 클릭 후 새 터미널을 통해 만들 수 있습니다.
 
@@ -42,11 +55,15 @@ git clone https://github.com/moonklabs/mdi-portal-lsm-study.git
 
 > frontend 폴더로 접근합니다.
 
+`npm install`
+
+> 의존성 설치
+
 `npm run start`
 
-> lite-server가 실행되고 로컬 환경에서 웹사이트가 열립니다.
+> 로컬 실행
 
-### 2. 백엔드 설정
+### 2. Backend
 
 _이 프로젝트는 기본적으로 SQLite를 사용하고 있습니다. MySQL, PostgreSQL 을 적용하고 싶으시다면 해당 링크를 참고해주세요 [데이터베이스 설정 가이드](docs/DB_guide.md)_
 
@@ -58,15 +75,11 @@ _이 프로젝트는 기본적으로 SQLite를 사용하고 있습니다. MySQL,
 
 `npm install`
 
-> backend 폴더로 접근 후 npm install을 실행합니다.
+> 의존성 설치
 
 `npm run start`
 
-> 위 과정이 끝난다면 해당 명령어를 사용해 서버를 열어줍니다.
-
-### 추가
-
-_backend, frontend를 같이 실행하는게 번거로우시고 VSCode를 사용중이시라면 Live Server 익스텐션도 참고해주세요._
+> 로컬 서버 실행
 
 #
 
