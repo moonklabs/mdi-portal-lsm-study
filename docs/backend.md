@@ -6,11 +6,9 @@ This document summarizes the backend-related content of the MDI Portal. It inclu
 
 ## Stack
 
-- Node.js
-- Nest.js
-- SQLite
-
-## Library
+- Node.js (Recommended minimum version 14.0.0 or higher)
+- Nest.js (10.0.0)
+- SQLite (5.1.7)
 
 ## Project Structure
 

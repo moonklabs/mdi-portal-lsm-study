@@ -53,7 +53,7 @@ This link provides a live demonstration of the full functionality of the React M
 
 ### Requirements
 
-- Node.js (16.20.2)
+- Node.js (Recommended minimum version 14.0.0 or higher)
 - npm
 
 ### 1. Clone the repository
@@ -105,5 +105,5 @@ _This project uses SQLite by default. If you want to use MySQL or PostgreSQL, pl
 If you are interested in my development journal, click on [About](docs/about.md) and [Development Journal](docs/개발일지/). If this project has helped you, please express your support by clicking the star button!
 
 <div align="center">
-  <a href="README_KR.md">🇰🇷 한국어 버전 보기</a>
+  <a href="README_KR.md">🇰🇷 Korean</a>
 </div>
