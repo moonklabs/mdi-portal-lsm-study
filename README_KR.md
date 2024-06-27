@@ -31,10 +31,10 @@
 
 ###
 
-기능에 대한 자세한 내용은 아래 링크를 참고해주세요
+<!-- 기능에 대한 자세한 내용은 아래 링크를 참고해주세요
 
 - [Backend](docs/backend/README_KR.md)
-- [Frontend](docs/frontend/README_KR.md)
+- [Frontend](docs/frontend/README_KR.md) -->
 
 ## 데모
 

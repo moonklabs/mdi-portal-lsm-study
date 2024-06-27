@@ -31,10 +31,10 @@ This project is built with React and Nest, and it supports the following feature
 
 ###
 
-For more details on features, please refer to the links below:
+<!-- For more details on features, please refer to the links below:
 
 - [Backend](docs/backend.md)
-- [Frontend](docs/frontend.md)
+- [Frontend](docs/frontend.md) -->
 
 ## Demo
 
