@@ -1,6 +1,6 @@
 # about me
 
-| 이름  | 역할      |
+| name  | position      |
 | ----- | --------- |
 | Ralph | FullStack |
 
