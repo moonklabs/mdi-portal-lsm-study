@@ -1,10 +1,10 @@
-# Database Configuration Guide
+# 데이터베이스 설정 가이드
 
-This guide explains how to connect to various databases (MySQL, SQLite, PostgreSQL) using TypeORM.
+이 가이드는 TypeORM을 사용하여 다양한 데이터 베이스(MySQL, SQLite, PostgreSQL)에 연결하는 방법을 설명합니다.
 
-1\. Environment File (`.env`)
+## 1. 환경 파일 (`.env`)
 
-First, create a `.env` file in the root directory of the backend project. Add the following environment variables to the `.env` file (except for SQLite).
+먼저, backend 프로젝트의 루트 디렉토리에 `.env` 파일을 생성합니다. 다음과 같은 환경 변수를 `.env` 파일에 추가합니다. (SQLite 제외)
 
 #### mysql
 
@@ -30,9 +30,9 @@ DATABASE_NAME=mydatabase
 
 #### sqlite
 
-For SQLite, `DATABASE_HOST`, `DATABASE_PORT`, `DATABASE_USERNAME`, and `DATABASE_PASSWORD` are not required.
+SQLite의 경우 DATABASE_HOST, DATABASE_PORT, DATABASE_USERNAME, DATABASE_PASSWORD는 필요하지 않습니다.
 
-## 2. TypeORM Configuration
+## 2. TypeORM 설정
 
 #### src/AppModule.ts
 
@@ -107,15 +107,15 @@ const dataSource = new DataSource({
 export default dataSource;
 ```
 
-> Change the type of `createdAt` and `modifiedAt` to `datetime` in the `User` and `Panel` entities.
+> User, Panel Entity에 createdAt, modifiedAt의 타입을 datetime으로 바꿔줍니다.
 
-### Additional
+### 추가
 
-If you want to change the `synchronize` setting to `false` and generate migration files, run the following commands.
+TypeORM 설정 시 synchronize 설정을 false로 바꾼 후 마이그레이션 파일을 생성하고 싶다면 아래 명령어를 실행해주세요.
 
-Update the `package.json` file
+`package.json` 파일 업데이트
 
-> Add scripts to run TypeORM CLI commands.
+> 스크립트를 추가하여 TypeORM CLI 명령을 실행할 수 있도록 합니다.
 
 ```js
 {
@@ -125,9 +125,9 @@ Update the `package.json` file
 }
 ```
 
-`Generate migration files`
+`마이그레이션 파일 생성`
 
-> Run the following command to generate migration files..
+> 다음 명령을 실행하여 마이그레이션 파일을 생성합니다.
 
 ```bash
 npx ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli migration:generate src/migrations/UpdateUserAndPanelTables -d src/data-source.ts

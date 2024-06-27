@@ -1,75 +1,88 @@
 # React Mdi Portal
 
-<h3 align="center">브라우저 내 개인화된 위젯을 생성해보세요.</h3>
-<hr style="width: 100%; margin: 25px 0;">
+<h3 align="center">Create personalized widgets in your browser.</h3>
+<!-- <hr style="width: 100%; margin: 25px 0;"> -->
+
+#
+
 <div align="center">
   <img src="https://github.com/moonklabs/mdi-portal-lsm-study/assets/62977652/77ab2ba6-d743-4ff5-aafc-4b6bfce51b97" alt="시연영상">
 </div>
 
-## About react-mdi-portal
+## Feature
 
-프로젝트는 React, Nest로 구성되어 있으며, 다음과 같은 기능을 지원합니다.
+This project is built with React and Nest, and it supports the following features:
 
 <!-- - 사용자는 시계, 브라우저 등 다양한 패널을 자유롭게 배치하고 크기를 조정할 수 있습니다. 패널은 Drag&Drop으로 쉽게 이동할 수 있으며, 숨기기, 최대화, 최소화 등의 기능을 통해 패널을 관리할 수 있습니다.
 
 - 하단의 taskbar 메뉴를 통해 모든 패널을 한 번에 숨기거나 열 수 있으며, grid 정렬과 stack 정렬 기능을 사용하여 패널을 깔끔하게 정렬할 수 있습니다. -->
 
-- 🌐 브라우저 위젯 생성
-- 🕒 시계 위젯 생성
-- 🖱️ 위젯 Drag&Drop
-- ↔️ 위젯 Resize
-- 📏 위젯 Grid Sort
-- 🗂️ 위젯 Stack Sort
-- 👁️ 위젯 숨기기
-- 🔲 위젯 최대화
-- 💾 위젯 상태 저장
-- 👁️‍🗨️ 모든 위젯 숨기기
-- 📂 모든 위젯 오픈
+- 🌐 Create browser widgets
+- 🕒 Create clock widgets
+- 🖱️ Drag & Drop widgets
+- ↔️ Resize widgets
+- 📏 Grid sort widgets
+- 🗂️ Stack sort widgets
+- 👁️ Hide widgets
+- 🔲 Maximize widgets
+- 👁️‍🗨️ Hide all widgets
+- 📂 Open all widgets
+- 💾 Save widget state
 
 ###
 
-기능에 대한 자세한 내용은 아래 링크를 참고해주세요
+For more details on features, please refer to the links below:
 
-- [Backend](./backend/README.md)
-- [Frontend](./frontend/README.md)
+- [Backend](docs/backend.md)
+- [Frontend](docs/frontend.md)
+
+## Demo
+
+You can try out the deployed version of the project through the following demo links:
+
+- Frontend: Hosted on Vercel
+- Backend: Hosted on Koyeb
+
+Experience the personalized widget creation and management features directly in your browser!
+
+- [react mdi portal](https://react-mdi-portal.vercel.app/)
+
+This link provides a live demonstration of the full functionality of the React Mdi Portal, allowing you to explore its capabilities.
 
 ## Quick start
 
-### 요구사항
+### Requirements
 
-- React
 - Node.js (16.20.2)
-- Nest.js
-- Sqlite (mysql, postgresql 선택 가능)
 - npm
 
-### 1. 레포지토리 클론
+### 1. Clone the repository
 
 ```bash
-git clone https://github.com/moonklabs/mdi-portal-lsm-study.git
+git clone https://github.com/moonklabs/react-mdi-portal.git
 ```
 
-### 1. FrontEnd
+### 2. Run the project
 
-터미널을 생성해 아래 명령어를 입력해주세요. VSCode를 사용중이시라면 상단에 터미널을 클릭 후 새 터미널을 통해 만들 수 있습니다.
+Open a terminal and enter the following commands. If you are using VSCode, click on the terminal tab at the top and open a new terminal.
 
-`cd frontend`
+`cd frontend or cd backend`
 
-> frontend 폴더로 접근합니다.
+> Navigate to the frontend or backend folder.
 
 `npm install`
 
-> 의존성 설치
+> Install dependencies.
 
 `npm run start`
 
-> 로컬 실행
+> Run the project locally.
 
-### 2. Backend
+_This project uses SQLite by default. If you want to use MySQL or PostgreSQL, please refer to this link [Database Setup Guide](docs/DB_guide.md)_
 
-_이 프로젝트는 기본적으로 SQLite를 사용하고 있습니다. MySQL, PostgreSQL 을 적용하고 싶으시다면 해당 링크를 참고해주세요 [데이터베이스 설정 가이드](docs/DB_guide.md)_
+<!-- ### 2. Backend -->
 
-백엔드 환경을 실행시키기 위해 새로운 터미널을 생성해주세요.
+<!-- 백엔드 환경을 실행시키기 위해 새로운 터미널을 생성해주세요.
 
 `cd backend`
 
@@ -81,8 +94,16 @@ _이 프로젝트는 기본적으로 SQLite를 사용하고 있습니다. MySQL,
 
 `npm run start`
 
-> 로컬 서버 실행
+> 로컬 서버 실행 -->
 
-#
+## Contributing
 
-저와 개발일지가 궁금하시다면 [About](docs/about.md), [개발일지](docs/개발일지/) 를 클릭해주시고 이 프로젝트가 도움이 되셨다면 star 버튼으로 표현해주세요!
+- If you have any feature requests or find bugs, please email us.
+
+## About
+
+If you are interested in my development journal, click on [About](docs/about.md) and [Development Journal](docs/개발일지/). If this project has helped you, please express your support by clicking the star button!
+
+<div align="center">
+  <a href="README_KR.md">🇰🇷 한국어 버전 보기</a>
+</div>

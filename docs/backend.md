@@ -1,16 +1,18 @@
-# MDI Portal Backend
+# React Mdi Portal Backend
 
-## README 소개
+## README Introduction
 
-MDI Portal의 Backend 관련 내용을 정리한 문서입니다. 해당 프로젝트의 기술 스택, 프로젝트 구조, 기능에 대한 설명을 확인하실 수 있습니다.
+This document summarizes the backend-related content of the MDI Portal. It includes explanations of the project's technology stack, structure, and features.
 
-## 주요 기술 스택
+## Stack
 
-- Node.js - 20.12.0
-- Nest.js - 10.3.2
-- MySQL - 8.0.31
+- Node.js
+- Nest.js
+- SQLite
 
-## 프로젝트 구조
+## Library
+
+## Project Structure
 
 ```
 backend
@@ -50,27 +52,29 @@ backend
  ┗ tsconfig.json
 ```
 
-## 기능 설명
+## Feature Description
 
-### 사용자 회원가입 및 로그인
+### User Registration and Login
 
-- **사용된 라이브러리**: `bcrpt`, `@nestjs/jwt`
-- **구현 방법**
-  - **회원 가입**: 사용자가 입력한 비밀번호를 `bcrpt`를 사용하여 해싱한 후 데이터베이스에 저장합니다.
-  - **로그인**: 사용자가 입력한 비밀번호를 데이터베이스에 저장된 해시된 비밀번호와 비교하여 인증을 수행합니다. 인증을 성공하면 jwt 토큰을 발급합니다.
+- **Libraries Used**: `bcrpt`, `@nestjs/jwt`
+- **Implementation Method**
+  - **Registration**: Hash the password entered by the user using `bcrypt` and save it to the database.
+  - **Login**: Compare the password entered by the user with the hashed password stored in the database for authentication. If authentication is successful, issue a JWT token.
 
-### **JWT를 이용한 인증**
+### **Authentication with JWT**
 
-- **사용된 라이브러리**: `@nestjs/jwt`, `passport-jwt`
-- **구현 방법**
+- **Libraries Used**: `@nestjs/jwt`, `passport-jwt`
+- **Implementation Method**
 
-  - **JWT 전략**: `passport-jwt`를 사용하여 JWT 토큰을 검증하고 사용자 인증을 수행합니다.
-  - **AuthGuard**: NestJs의 `@useGuard` 데이코레이터를 사용하여 JWT 인증이 필요한 라우트에 대해 JWT 토큰을 검증합니다.
+  - **JWT Strategy**: Use `passport-jwt` to verify the JWT token and authenticate the user.
 
-### 패널 관리
+  - **AuthGuard**: Use NestJs's `@UseGuards` decorator to verify the JWT token for routes that require JWT authentication.
 
-- **사용된 라이브러리**: `passport-jwt`
-- **구현 방법**
+### Panel Management
 
-  - **패널 생성 및 수정**: 인증된 사용자에게 클라이언트에서 패널 데이터를 받아와서 데이터베이스에 저장 및 업데이트합니다.
-  - **패널 조회**: PanelController에서 JWT 인증을 통해 사용자를 확인하고 데이터베이스에서 사용자의 모든 패널을 조회합니다.
+- **Libraries Used**: `passport-jwt`
+- **Implementation Method**
+
+  - **Creating and Updating Panels**: Receive panel data from the client for authenticated users and save or update it in the database.
+
+  - **Retrieving Panels**: The `PanelController` authenticates the user using JWT and retrieves all panels of the user from the database.
