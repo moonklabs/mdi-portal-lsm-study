@@ -1,8 +1,8 @@
 # about me
 
-| 이름   | 역할   |
-| ------ | ------ |
-| 이수민 | 풀스택 |
+| 이름  | 역할      |
+| ----- | --------- |
+| Ralph | FullStack |
 
 <img src="../sumin.jpg" alt="이수민" width="140" />
 
