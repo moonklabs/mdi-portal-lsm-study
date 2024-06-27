@@ -1,7 +1,9 @@
+본인의 위젯을 넣는 가이드
+스타일 변경 가이드
+
 # React Mdi Portal
 
 <h3 align="center">Create personalized widgets in your browser.</h3>
-<!-- <hr style="width: 100%; margin: 25px 0;"> -->
 
 #
 
@@ -13,10 +15,6 @@
 
 This project is built with React and Nest, and it supports the following features:
 
-<!-- - 사용자는 시계, 브라우저 등 다양한 패널을 자유롭게 배치하고 크기를 조정할 수 있습니다. 패널은 Drag&Drop으로 쉽게 이동할 수 있으며, 숨기기, 최대화, 최소화 등의 기능을 통해 패널을 관리할 수 있습니다.
-
-- 하단의 taskbar 메뉴를 통해 모든 패널을 한 번에 숨기거나 열 수 있으며, grid 정렬과 stack 정렬 기능을 사용하여 패널을 깔끔하게 정렬할 수 있습니다. -->
-
 - 🌐 Create browser widgets
 - 🕒 Create clock widgets
 - 🖱️ Drag & Drop widgets
@@ -26,7 +24,7 @@ This project is built with React and Nest, and it supports the following feature
 - 👁️ Hide widgets
 - 🔲 Maximize widgets
 - 👁️‍🗨️ Hide all widgets
-- 📂 Open all widgets
+- 📂 Open all widgest
 - 💾 Save widget state
 
 ###
@@ -78,23 +76,7 @@ Open a terminal and enter the following commands. If you are using VSCode, click
 
 > Run the project locally.
 
-_This project uses SQLite by default. If you want to use MySQL or PostgreSQL, please refer to this link [Database Setup Guide](docs/DB_guide.md)_
-
-<!-- ### 2. Backend -->
-
-<!-- 백엔드 환경을 실행시키기 위해 새로운 터미널을 생성해주세요.
-
-`cd backend`
-
-> backend 폴더로 접근합니다.
-
-`npm install`
-
-> 의존성 설치
-
-`npm run start`
-
-> 로컬 서버 실행 -->
+_This project uses SQLite by default. If you want to use MySQL or PostgreSQL, please refer to this link [Database Setup Guide](docs/guide/DB_guide.md)_
 
 ## Contributing
 

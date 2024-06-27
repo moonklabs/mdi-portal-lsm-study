@@ -78,7 +78,7 @@ git clone https://github.com/moonklabs/react-mdi-portal.git
 
 > 로컬 실행
 
-_이 프로젝트는 기본적으로 SQLite를 사용하고 있습니다. MySQL, PostgreSQL 을 적용하고 싶으시다면 해당 링크를 참고해주세요 [데이터베이스 설정 가이드](docs/DB_guide_KR.md)_
+_이 프로젝트는 기본적으로 SQLite를 사용하고 있습니다. MySQL, PostgreSQL 을 적용하고 싶으시다면 해당 링크를 참고해주세요 [데이터베이스 설정 가이드](docs/guide/DB_guide_KR.md)_
 
 <!-- ### 2. Backend -->
 
