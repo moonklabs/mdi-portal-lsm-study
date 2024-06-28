@@ -1,15 +1,15 @@
 # Style Guide
 
-### If you want to change the design, please refer to this Style Guide.
+### 디자인을 변경하시고 싶다면 해당 Style Guide를 참고해주세요.
 
-_If you are not familiar with MUI, it is recommended to learn MUI first._
+_MUI에 대한 이해가 없다면 MUI를 먼저 학습하시는 걸 추천드립니다._
 
 ## Header
 
-In the Header, you can modify the logo and Header text. The `sx={{Text}}` in the component applies common text styles. If you want to change the Text code, please refer to the Common Style section below.
+Header에서는 로고, Header text, 정도를 수정할 수 있습니다. 해당 컴포넌트에 있는 `sx={{Text}}`는 Text 공통 스타일을 적용시킨 코드입니다. Text 코드를 변경하고 싶으시다면 아래 Common Style 항목을 참고해주세요.
 
 ```js
-// Styles used only in this component are written at the bottom of the component.
+컴포넌트 하단에 해당 컴포넌트에서만 사용하는 style들이 작성되어 있습니다.
 
 const Header = styled(AppBar)({
   background: 'linear-gradient(315deg, #3A3A3A 98%, #A8A8A8 102%)',
@@ -64,14 +64,15 @@ const modalStyle = {
   padding: '2.4rem',
   borderRadius: '0.4rem',
 };
+
 ```
 
 ## TaskList
 
-In TaskList, you can specify the styles for the widget list and menu items. If you want to change the position or style of the Popover tag, please refer to [Popover](https://mui.com/material-ui/react-popover/).
+TaskList에서는 위젯 리스트, 메뉴 항목에 대한 스타일을 지정할 수 있습니다. Popover 태그의 위치 또는 스타일을 변경하고 싶으시다면 [Popover](https://mui.com/material-ui/react-popover/)를 참고해주세요.
 
 ```js
-// Styles used only in this component are written at the bottom of the component.
+컴포넌트 하단에 해당 컴포넌트에서만 사용하는 style들이 작성되어 있습니다.
 
 const TaskMenuButton = styled(Button)({
   borderRadius: 0,
@@ -119,11 +120,11 @@ const modalStyle = {
 
 ## Panel
 
-The header style of the widget can be modified in `PanelHeader` where you can change the style of the widget's title, header color, and header icon.
+위젯의 header 스타일은 PanelHeader 에서 위젯의 title, header 색상, header icon에 대한 스타일을 변경하실 수 있습니다.
 
 ## Common Style
 
-`src/style/CommonStyle.js` contains styles used commonly across the application.
+`src/style/CommonStyle.js` 공통으로 사용되는 스타일입니다.
 
 ```js
 export const Text = {
@@ -167,11 +168,11 @@ export const CloseBox = {
 </HeaderContentBox>;
 ```
 
-Common styles are written to avoid redundancy and to be reused.
+공통 스타일은 위와 같이 중복되는 스타일 위주로 작성되어 있습니다.
 
 ## Form Style
 
-`src/style/FormStyled.js` contains styles used for forming components.
+`src/style/FormStyled.js` form을 구성하는데 사용되는 스타일이다.
 
 ```js
 import {
@@ -256,6 +257,4 @@ export const FormCheckLabel = styled(FormControlLabel)({
 // FormControlLabel
 ```
 
-Inline styles within the form tags are mostly for interactions, and you can change the form style by adjusting the styles in the above code.
-
-_If you encounter issues or find any errors while following the guide, please send an email._
+form태그 안에 있는 인라인 스타일들은 인터렉션을 위한 스타일이 대부분이고 위 코드의 스타일을 조정하면 form 스타일을 변경할 수 있다.

@@ -1,10 +1,10 @@
 # Widget Guide
 
-### If you want to create a panel with the widget of your choice, please refer to this guide.
+### 원하는 위젯으로 패널을 만들고 싶다면 해당 가이드를 참고해주세요.
 
-## Adding a new type when creating a panel
+## 패널 생성 시 새로운 유형 추가
 
-`src/components/NewWindowForm.js` file to allow you to select a new panel type.
+`src/components/NewWindowForm.js` 파일을 수정하여 새로운 패널 유형을 선택할 수 있도록 합니다.
 
 ```js
 // src/modal/NewWindowForm.jsx
@@ -30,11 +30,11 @@ const windowData = {
 };
 ```
 
-> Add customContent to action, content, and create another checkbox for customContent.
+> action, content에 customContent를 추가해준 후 customContent에 대한 체크박스를 하나 더 만들어 줍니다.
 
-## Define a new panel type
+## 새로운 패널 유형 정의
 
-`src/components/PanelContent.js` file and define the new panel type like this
+`src/components/PanelContent.js` 파일을 열고 다음과 같이 새로운 패널 유형을 정의합니다:
 
 ```js
 // src/components/PanelContent.js
@@ -72,15 +72,15 @@ const PanelContent = ({ action, content, title, timezone, currentTime }) => {
 export default PanelContent;
 ```
 
-## Writing CustomApp components
+## CustomApp 컴포넌트 작성
 
-`src/components/CustomApp.js` file, and write the logic for your custom app.
+`src/components/CustomApp.js` 파일을 생성하고, 사용자 정의 앱의 로직을 작성합니다.
 
 ```js
 import React from 'react';
 
 const CustomApp = ({ content }) => {
-  // This is where you write the logic for your personal app.
+  // 개인 앱의 로직을 이곳에 작성합니다.
   return (
     <div>
       <h2>Custom App</h2>
@@ -92,6 +92,6 @@ const CustomApp = ({ content }) => {
 export default CustomApp;
 ```
 
-> Follow this guide to create a custom widget as a panel. If you want to create multiple custom widgets, you can modify the code based on this guide.
+> 해당 가이드를 따라하시면 custom 위젯을 패널로 생성하실 수 있습니다. 여러개의 custom 위젯을 만들 고 싶으시다면 내용을 토대로 코드를 수정해주시면 되겠습니다.
 
-_If you encounter issues or find any errors while following the guide, please send an email._
+_가이드 내용을 따라해도 잘안되거나, 잘못된 부분이 있다면 메일 남겨주세요._

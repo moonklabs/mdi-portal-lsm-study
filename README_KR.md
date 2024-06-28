@@ -3,6 +3,10 @@
 <h3 align="center">브라우저 내 개인화된 위젯을 생성해보세요.</h3>
 <!-- <hr style="width: 100%; margin: 25px 0;"> -->
 
+<div align="center">
+  <a href="README.md">🇺🇸 View in English</a>
+</div>
+
 #
 
 <div align="center">
@@ -51,6 +55,8 @@
 
 ## Quick start
 
+본인의 커스텀 앱을 넣고싶다면 [Custom](docs/guide/widget_guide.md) 를 참고해주세요, 또한 본인만의 스타일을 입히고 싶다면 [Style](docs/guide/style_guide.md) 가이드를 참고해주세요
+
 ### 요구사항
 
 - Node.js (최소 14.0.0 버전 이상 권장)
@@ -62,13 +68,13 @@
 git clone https://github.com/moonklabs/react-mdi-portal.git
 ```
 
-### 2. 실행
+### 2. 프론트엔드 실행
 
 터미널을 생성해 아래 명령어를 입력해주세요. VSCode를 사용중이시라면 상단에 터미널을 클릭 후 새 터미널을 통해 만들 수 있습니다.
 
-`cd frontend or cd backend`
+`cd frontend`
 
-> frontend or backend 폴더로 접근합니다.
+> frontend 폴더로 접근합니다.
 
 `npm install`
 
@@ -78,11 +84,9 @@ git clone https://github.com/moonklabs/react-mdi-portal.git
 
 > 로컬 실행
 
-_이 프로젝트는 기본적으로 SQLite를 사용하고 있습니다. MySQL, PostgreSQL 을 적용하고 싶으시다면 해당 링크를 참고해주세요 [데이터베이스 설정 가이드](docs/guide/DB_guide_KR.md)_
+### 2. Backend -->
 
-<!-- ### 2. Backend -->
-
-<!-- 백엔드 환경을 실행시키기 위해 새로운 터미널을 생성해주세요.
+백엔드 환경을 실행시키기 위해 새로운 터미널을 생성해주세요.
 
 `cd backend`
 
@@ -94,7 +98,9 @@ _이 프로젝트는 기본적으로 SQLite를 사용하고 있습니다. MySQL,
 
 `npm run start`
 
-> 로컬 서버 실행 -->
+> 로컬 실행
+
+_이 프로젝트는 기본적으로 SQLite를 사용하고 있습니다. MySQL, PostgreSQL 을 적용하고 싶으시다면 해당 링크를 참고해주세요 [데이터베이스 설정 가이드](docs/guide/DB_guide_KR.md)_
 
 ## Contributing
 
@@ -103,7 +109,3 @@ _이 프로젝트는 기본적으로 SQLite를 사용하고 있습니다. MySQL,
 ## About
 
 저와 개발일지가 궁금하시다면 [About](docs/about.md), [개발일지](docs/개발일지/) 를 클릭해주시고 이 프로젝트가 도움이 되셨다면 star 버튼으로 표현해주세요!
-
-<div align="center">
-  <a href="README.md">🇺🇸 View in English</a>
-</div>

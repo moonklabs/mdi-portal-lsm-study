@@ -1,9 +1,10 @@
-본인의 위젯을 넣는 가이드
-스타일 변경 가이드
-
 # React Mdi Portal
 
 <h3 align="center">Create personalized widgets in your browser.</h3>
+
+<div align="center">
+  <a href="README_KR.md">🇰🇷 Korean</a>
+</div>
 
 #
 
@@ -43,11 +44,15 @@ You can try out the deployed version of the project through the following demo l
 
 Experience the personalized widget creation and management features directly in your browser!
 
-- [react mdi portal](https://react-mdi-portal.vercel.app/)
+<!-- - [react mdi portal](https://react-mdi-portal.vercel.app/) -->
+
+- <a href="https://react-mdi-portal.vercel.app/" target="\_blank">react mdi portal</a>
 
 This link provides a live demonstration of the full functionality of the React Mdi Portal, allowing you to explore its capabilities.
 
 ## Quick start
+
+If you want to add your own custom app, please refer to [Custom](docs/guide/widget_guide.md). Additionally, if you want to apply your own style, please refer to the [Style](docs/guide/style_guide.md) guide.
 
 ### Requirements
 
@@ -60,13 +65,29 @@ This link provides a live demonstration of the full functionality of the React M
 git clone https://github.com/moonklabs/react-mdi-portal.git
 ```
 
-### 2. Run the project
+### 2.1 Run Frotend
 
 Open a terminal and enter the following commands. If you are using VSCode, click on the terminal tab at the top and open a new terminal.
 
-`cd frontend or cd backend`
+`cd frontend`
 
-> Navigate to the frontend or backend folder.
+> Navigate to the frontend folder.
+
+`npm install`
+
+> Install dependencies.
+
+`npm run start`
+
+> Run the project locally.
+
+### 2.2 Run Backend
+
+Open a terminal and enter the following commands. If you are using VSCode, click on the terminal tab at the top and open a new terminal.
+
+`cd backend`
+
+> Navigate to the frontend backend.
 
 `npm install`
 
@@ -85,7 +106,3 @@ _This project uses SQLite by default. If you want to use MySQL or PostgreSQL, pl
 ## About
 
 If you are interested in my development journal, click on [About](docs/about.md) and [Development Journal](docs/개발일지/). If this project has helped you, please express your support by clicking the star button!
-
-<div align="center">
-  <a href="README_KR.md">🇰🇷 Korean</a>
-</div>
